@@ -155,9 +155,9 @@ achieve sparsity.</p>
   model <span class='op'>=</span> <span class='cn'>NULL</span>,
   data <span class='op'>=</span> <span class='cn'>NULL</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  pen.shrink <span class='op'>=</span> <span class='st'>"none"</span>,
+  pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
   pen.diff <span class='op'>=</span> <span class='st'>"none"</span>,
-  eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>none <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>none <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
+  eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>lambda <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>none <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
   strategy <span class='op'>=</span> <span class='st'>"fixed"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -239,9 +239,9 @@ complete list, please refer to <code><a href='penfaOptions.html'>penfaOptions</a
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code><a href='penfa-class.html'>penfa</a></code>, for which several
-methods are available, including a summary method. See
-<code><a href='summary,penfa-method.html'>summary,penfa-method</a></code>, <code><a href='show,penfa-method.html'>show,penfa-method</a></code>,
-<code><a href='coef,penfa-method.html'>coef,penfa-method</a></code>, <code><a href='fitted,penfa-method.html'>fitted,penfa-method</a></code>.</p>
+methods are available. See the corresponding man page of
+<code>summary,penfa-method</code>, <code>show,penfa-method</code>,
+<code>coef,penfa-method</code>, and <code>fitted,penfa-method</code> for details.</p>
     <h2 class="hasAnchor" id="data-set-vs-sample-moments"><a class="anchor" href="#data-set-vs-sample-moments"></a>Data set vs Sample Moments</h2>
 
     <p>The <code>penfa</code> function currently takes in input a data set, as opposed to
@@ -349,15 +349,6 @@ restrictions:</p>
 <p>Notice that multiplying a certain parameter by <code>NA</code> forces it to be
 estimated.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Penalization</h3>
-
-
-<p>By default, the <code>penfa</code> function penalizes every element in the
-parameter matrix/vector specified in its <code>eta</code> argument. For instance,
-if <code>eta = list("shrink" = c("lambda" = 0.01), "diff" = c("none" = 0))</code>
-all factor loadings are penalized. If <code>eta = list("shrink" = c("none" =
-0), "diff" = c("none" = 0))</code> , none of the model parameters are penalized.</p>
-
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Starting values</h3>
 
 
@@ -426,6 +417,14 @@ tuning parameters. It also eliminates the need for time-consuming and
 computationally intensive grid-searches.</p>
 <p><strong>Note:</strong> Only lasso, adaptive lasso and ridge penalties can be used
 with the automatic procedure.</p>
+<p>The automatic procedure returns the optimal value of the tuning parameter.
+Notice, however, that the parameter estimates from this model will slightly
+differ from the ones one would obtain by setting <code>strategy = "grid"</code> and
+<code>eta</code> equal to that optimal tuning value. This is due to the different
+starting values employed in the two scenarios. In the automatic procedure,
+the starting values of the final model come from the ones of the previous
+model in the optimization loop; in the fixed-tuning context, the starting
+values come from the default ones in <code>penfa</code>.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Grid-search</h3>
 
@@ -446,9 +445,43 @@ found as the sum of the effective degree of freedom for each model parameter,
 which ranges from 0 to 1 and quantifies the extend to which each parameter
 has been penalized. <br /></p>
 
-    <h2 class="hasAnchor" id="more-sparsity"><a class="anchor" href="#more-sparsity"></a>More sparsity</h2>
+    <h2 class="hasAnchor" id="penalization"><a class="anchor" href="#penalization"></a>Penalization</h2>
 
-    <p>The penalized model automatically tries to generate the optimal trade-off
+    <p>By default, the <code>penfa</code> function penalizes every element in the
+parameter matrix/vector specified in its <code>eta</code> argument. For instance,
+if <code>eta = list("shrink" = c("lambda" = 0.01), "diff" = c("none" = 0))</code>
+all factor loadings are penalized. If <code>eta = list("shrink" = c("none" =
+0), "diff" = c("none" = 0))</code> , none of the model parameters are penalized.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Which penalty to chose?</h3>
+
+
+<p>It may be beneficial to try out different penalties, and see which one works
+best for the problem at hand. It is also useful to keep the following in mind:</p><ul>
+<li><p><strong>Shrinkage</strong>: lasso, alasso, scad, and mcp are able to shrink parameters
+to zero, contrarily to the ridge penalty whose purpose is just regularizing
+the estimation process.</p></li>
+<li><p><strong>Unbiasedness</strong>: alasso, scad, and mcp enjoy the so-called "oracle"
+property. On the contrary, the lasso is biased since it applies the same
+penalization to all parameters.</p></li>
+<li><p><strong>Automatic procedure:</strong> only lasso, alasso, and ridge are supported by the
+automatic procedure. This means that these penalties are a convenient choice
+with all the analyses requiring multiple penalty terms (e.g., multiple-group
+analyses), for which the automatic procedure is the only feasible alternative
+to otherwise computationally intensive multi-dimensional grid-searches.</p></li>
+</ul>
+
+<p>Geminiani, Marra, and Moustaki (under review) performed numerical and
+empirical examples to evaluate and compare the performance of single and
+multiple-group penalized factor models under different penalty functions. The
+alasso penalty generally produced the best trade-off between sparsity and
+goodness of fit. However, unlike other penalties, the alasso requires a set
+of adaptive weights. In some situations, the weights might not be available,
+or might be difficult to obtain. If this is the case, users are encouraged to
+resort to other simpler penalties. <br /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>More sparsity</h3>
+
+
+<p>The penalized model automatically tries to generate the optimal trade-off
 between goodness of fit and model complexity (if <code>strategy = "auto"</code>).
 As a result of this delicate balance, it may not provide the sparsest factor
 solution. If users desire more sparsity, they can follow the guidelines
@@ -468,6 +501,16 @@ specifying, for instance, <code>a.alasso = 2</code>) leads to sparser solutions.
 value in the option <code>eta</code> to encourage more sparsity. When doing so, it
 is helpful to first do some trials and understand a reasonable range of
 values that the tuning parameter can take. <br /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Ordinary Maximum Likelihood</h3>
+
+
+<p>In case of a single-group analysis, <code>pen.shrink = "none"</code> reduces to the
+estimation of the unpenalized model by ordinary maximum likelihood. In case
+of a multiple-group analysis, if both <code>pen.shrink = "none"</code> and
+<code>pen.diff = "none"</code>, the <code>penfa</code> function estimates an unpenalized
+multiple-group factor model by maximum likelihood. <br /></p>
+
     <h2 class="hasAnchor" id="convergence-amp-admissibility"><a class="anchor" href="#convergence-amp-admissibility"></a>Convergence &amp; Admissibility</h2>
 
     <p>The function <code>penfa</code> internally assess the convergence of the fitted
@@ -573,29 +616,20 @@ the covariance matrix of the estimated parameters. The implemented framework
 allows to have a standard error for every model parameter. However, users
 should take extra caution when using the standard errors associated with the
 penalized parameters that were shrunken to zero. <br /></p>
-    <h2 class="hasAnchor" id="ordinary-maximum-likelihood"><a class="anchor" href="#ordinary-maximum-likelihood"></a>Ordinary Maximum Likelihood</h2>
-
-    <p>In case of a single-group analysis, <code>pen.shrink = "none"</code> reduces to the
-estimation of the unpenalized model by ordinary maximum likelihood. In case
-of a multiple-group analysis, if both <code>pen.shrink = "none"</code> and
-<code>pen.diff = "none"</code>, the <code>penfa</code> function estimates an unpenalized
-multiple-group factor model by maximum likelihood. <br /></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Geminiani E. (2020), "A penalized likelihood-based framework for single and
 multiple-group factor analysis models" (Doctoral dissertation, University of
 Bologna). Available at <a href='http://amsdottorato.unibo.it/9355/'>http://amsdottorato.unibo.it/9355/</a>.</p>
-<p>Geminiani E., Marra G., Moustaki I. (under revision), "Single and
+<p>Geminiani E., Marra G., Moustaki I. (under review), "Single and
 multiple-group penalized factor analysis: a trust-region algorithm approach
 with integrated automatic multiple tuning parameter selection".</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='penfa-class.html'>penfa-class</a></code>, <code><a href='summary,penfa-method.html'>summary,penfa-method</a></code>,
-<code><a href='show,penfa-method.html'>show,penfa-method</a></code>, <code><a href='coef,penfa-method.html'>coef,penfa-method</a></code>,
-<code><a href='fitted,penfa-method.html'>fitted,penfa-method</a></code></p></div>
+    <div class='dont-index'><p><code><a href='penfa-class.html'>penfa-class</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Author: Elena Geminiani <a href='mailto:geminianielena@gmail.com'>geminianielena@gmail.com</a>.</p>
+    <p>Elena Geminiani <a href='mailto:geminianielena@gmail.com'>geminianielena@gmail.com</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -615,7 +649,18 @@ with integrated automatic multiple tuning parameter selection".</p>
                     <span class='co'>## automatic procedure</span>
                     strategy <span class='op'>=</span> <span class='st'>"auto"</span>,
                     gamma <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>alasso_fit</span>
+</div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
+#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00298271 
+#&gt; Iteration  2 : 0.00452604 
+#&gt; 
+#&gt; Largest absolute gradient value: 12.76355181
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [180.2917, 9189645]
+#&gt; Trust region iterations: 15 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 27.12936  </div><div class='input'><span class='va'>alasso_fit</span>
 </div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
 #&gt; 
 #&gt;   Number of observations                                    767
@@ -647,7 +692,14 @@ h1 + v1 ~ 0*1 '</span>
                    pen.shrink <span class='op'>=</span> <span class='st'>"none"</span>,
                    pen.diff <span class='op'>=</span> <span class='st'>"none"</span>,
                    eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mle_weightsMG</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>mle_fitMG</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Largest absolute gradient value: 0.00108292
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [2.904073, 76169.99]
+#&gt; Trust region iterations: 22 
+#&gt; Factor solution: admissible 
+#&gt; Computing VCOV ... done.
+#&gt; Effective degrees of freedom: 94  </div><div class='input'><span class='va'>mle_weightsMG</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>mle_fitMG</span><span class='op'>)</span>
 
 <span class='co'># Fit model</span>
 <span class='va'>alasso_fitMG</span> <span class='op'>&lt;-</span> <span class='fu'>penfa</span><span class='op'>(</span><span class='co'>## factor model</span>
@@ -666,7 +718,17 @@ h1 + v1 ~ 0*1 '</span>
                       gamma <span class='op'>=</span> <span class='fl'>4</span>,
                       <span class='co'>## alasso</span>
                       weights <span class='op'>=</span> <span class='va'>mle_weightsMG</span><span class='op'>)</span>
-<span class='va'>alasso_fitMG</span>
+</div><div class='output co'>#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00215339 3061215.60016969 0.00275238 
+#&gt; Iteration  2 : 0.00196556 31104.27952631 0.00807834 
+#&gt; 
+#&gt; Largest absolute gradient value: 68.08486896
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [53.35061, 9.10331e+12]
+#&gt; Trust region iterations: 23 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 56.76456  </div><div class='input'><span class='va'>alasso_fitMG</span>
 </div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
 #&gt; 
 #&gt;   Number of observations per group:                            
@@ -698,7 +760,7 @@ h1 + v1 ~ 0*1 '</span>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra.</p>
+  <p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p>
 </div>
 
 <div class="pkgdown">

@@ -97,11 +97,12 @@
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<p>You can install the released version of penfa from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
+<!-- You can install the released version of penfa from [CRAN](https://CRAN.R-project.org) with: -->
+<!-- ``` r -->
+<!-- install.packages("penfa") -->
+<!-- ``` -->
+<p>You can install the development version of penfa from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"penfa"</span><span class="op">)</span></code></pre></div>
-<p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"egeminiani/penfa"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -109,15 +110,15 @@
 <h3 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h3>
 <p>This is a basic example showing how to fit a penalized factor model with the alasso penalty and the automatic tuning procedure. Let’s load the data.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">penfa</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ccdata</span><span class="op">)</span></code></pre></div>
 <p><font size="4"><strong>Step 1</strong></font> : specify the model syntax</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">syntax</span> <span class="op">=</span> <span class="st">'help  =∼   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
           voice =∼ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'</span></code></pre></div>
 <p><font size="4"><strong>Step 2</strong></font>: fit the model</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alasso_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/penfa.html">penfa</a></span><span class="op">(</span>model  <span class="op">=</span> <span class="va">syntax</span>,
                     data   <span class="op">=</span> <span class="va">ccdata</span>,
                     std.lv <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -143,7 +144,7 @@
 <span class="co">#&gt;                                                                </span>
 <span class="co">#&gt; </span></code></pre></div>
 <p><font size="4"><strong>Step 3</strong></font>: inspect the results</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">alasso_fit</span><span class="op">)</span>
 <span class="co">#&gt; penfa 0.0.0.9000 reached convergence</span>
 <span class="co">#&gt; </span>
@@ -243,7 +244,7 @@
 <h3 class="hasAnchor">
 <a href="#literature" class="anchor"></a>Literature</h3>
 <ul>
-<li><p>Geminiani, Elena, Giampiero Marra, and Irini Moustaki. 2021. “Single and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated Automatic Multiple Tuning Parameter Selection.” Psychometrika 0: 0.</p></li>
+<li><p>Geminiani, Elena, Giampiero Marra, and Irini Moustaki (under review). “Single and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated Automatic Multiple Tuning Parameter Selection.”</p></li>
 <li><p>Geminiani, Elena. 2020. “A Penalized Likelihood-Based Framework for Single and Multiple-Group Factor Analysis Models.” PhD thesis, University of Bologna. <a href="http://amsdottorato.unibo.it/9355/" class="uri">http://amsdottorato.unibo.it/9355/</a>.</p></li>
 </ul>
 </div>
@@ -269,6 +270,7 @@
 <ul class="list-unstyled">
 <li>Elena Geminiani <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5992-9728" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Giampiero Marra <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9010-2646" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Irini Moustaki <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8371-1251" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -276,7 +278,6 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a></li>
-<li><a href="https://travis-ci.com/egeminiani/penfa"><img src="https://travis-ci.com/egeminiani/penfa.svg?branch=master" alt="Travis build status"></a></li>
 </ul>
 </div>
 </div>
@@ -284,7 +285,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra.</p>
+  <p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p>
 </div>
 
 <div class="pkgdown">

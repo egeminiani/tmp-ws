@@ -177,18 +177,52 @@ class for additional details.</p></dd>
 <dt><code>Model</code>:</dt><dd><p>Object of internal class <code>"penfaModel"</code>: the internal
 (matrix) representation of the model. See the <code><a href='penfaModel-class.html'>penfaModel</a></code>
 class for additional details.</p></dd>
-<dt><code>Optim</code>:</dt><dd><p>List. Information about the optimization process.</p></dd>
+<dt><code>Optim</code>:</dt><dd><p>List. Information about the optimization process. This
+includes the estimated parameters (<code>x</code>), the number of estimated
+parameters (<code>npar</code>), the number of trust-region iterations
+(<code>iterations</code>), the value of the penalized objective function
+(<code>fx.pen</code>; this is multiplied by N, so that furtherly multiplying it by
+(-1) gives the penalized log-likelihood), the group values of the penalized
+objective function (<code>fx.pen.group</code>), the unpenalized objective function
+(<code>logl</code>), the group-values of the unpenalized objective function
+(<code>logl.group</code>), the penalized gradient of the objective function
+(<code>dx.pen</code>), the penalized Hessian/Fisher information matrix of the
+objective function (<code>hessian.pen</code>), the list of control arguments for
+the trust-region algorithm (<code>control</code>), and how many times the
+objective function became non-positive definite during the estimation
+process (<code>npd</code>). If penfa was called with the option <code>verbose =
+ TRUE</code>, the following additional arguments coming from the trust-region
+function <code>trust</code> are reported in the <code>Optim</code> slot: <code>argpath</code>,
+<code>argtry</code>, <code>type</code>, <code>accept</code>, <code>radii</code>, <code>rho</code>,
+<code>fx.val</code>, <code>fx.valtry</code>, <code>change</code>, <code>stepnorm</code>. See the
+manual page of <code>trust</code> from the <code>trust</code> package for an overview of
+these quantities. FIXME</p></dd>
 <dt><code>Penalize</code>:</dt><dd><p>Object of internal class <code>"penfaPenalty"</code>; contains
 information about the penalization. See the <code><a href='penfaPenalty-class.html'>penfaPenalty</a></code> for
 additional details.</p></dd>
-<dt><code>Implied</code>:</dt><dd><p>List. Model-implied statistics.</p></dd>
-<dt><code>Loglik</code>:</dt><dd><p>List. Information about the maximum log-likelihood of
-the model.</p></dd>
-<dt><code>Vcov</code>:</dt><dd><p>List. Information about the variance matrix (vcov) of the
-model parameters.</p></dd>
-<dt><code>H1</code>:</dt><dd><p>List. Information about the unrestricted h1 model.</p></dd>
+<dt><code>Implied</code>:</dt><dd><p>List. Model-implied moments (covariance matrix and
+mean vector).</p></dd>
+<dt><code>Loglik</code>:</dt><dd><p>List. Information about the log-likelihood of
+the unpenalized factor model. FIXME</p></dd>
+<dt><code>Vcov</code>:</dt><dd><p>List. Information about the variance matrix (vcov) of
+the model parameters. This slot includes the following quantities:  the type
+of penalized information matrix used in the model (either Hessian or Fisher;
+<code>information</code>), the vcov matrix of parameters (<code>vcov</code>), whether
+the convergence checks on the penalized gradient and the penalized
+information matrix were satisfied (<code>solution</code>), whether the employed
+information matrix was positive-definite (<code>pdef</code>),  whether the
+estimated factor solution was admissible (<code>admissibility</code>), the
+standard errors computed according to the Bayesian result from the
+information matrix reported in <code>information</code> (<code>se</code>), and the 95%
+confidence intervals (<code>ci</code>).</p></dd>
+<dt><code>H1</code>:</dt><dd><p>List. Information about the unrestricted (unpenalized) H1
+model, including the implied moments and log-likelihood.</p></dd>
 <dt><code>Inference</code>:</dt><dd><p>List. Information on effective degrees of the model
-and information criteria for model selection.</p></dd>
+and information criteria for model selection. This slot reports the
+following quantities: effective degree of freedom for each parameter
+(<code>Edf.single</code>), total edf (<code>edf</code>), influence matrix
+(<code>influence.mat</code>), generalized information criteria (<code>IC</code>), such
+as AIC, BIC, AIC3, CAIC, BIC, ABIC, HBIC.</p></dd>
 <dt><code>external</code>:</dt><dd><p>List. Empty slot.</p></dd>
 
 </dl>
@@ -204,31 +238,28 @@ and information criteria for model selection.</p></dd>
 <dt>show</dt><dd><p><code>signature(object = "penfa")</code>: Prints a short summary of the
 estimation process, including the optimization method, the specified penalty
 functions, the convergence status, the number of iterations, the tuning
-selection strategy, and the effective degrees of freedom. See
-<code><a href='show,penfa-method.html'>show,penfa-method</a></code> for details.</p></dd>
-<dt>summary</dt><dd><p><code>signature(object = "penfa", header = TRUE, estimates =
-TRUE, ci = TRUE, level =</code> <code> 0.95, nd = 3L, cutoff = 0.05, extra =
-TRUE)</code>: Prints a summary of the model parameter estimates, and the
-optimization process. See <code><a href='summary,penfa-method.html'>summary,penfa-method</a></code> for details.</p></dd>
-<dt>coef</dt><dd><p><code>signature(object = "penfa", type = "free", labels = TRUE)</code>:
-Returns the estimates of the parameters in the model as a named numeric
-vector. See <code><a href='coef,penfa-method.html'>coef,penfa-method</a></code> for details.</p></dd>
-<dt>fitted</dt><dd><p><code>signature(object = "penfa", labels = TRUE)</code>: Returns a
-list of the model-implied moments (per group). See
-<code><a href='fitted,penfa-method.html'>fitted,penfa-method</a></code> for details.</p></dd>
+selection strategy, and the effective degrees of freedom. See the man page of
+<code>show,penfa-method</code> for details.</p></dd> <dt>summary</dt><dd><p><code>signature(object
+= "penfa", header = TRUE, estimates = TRUE, ci = TRUE, level =</code> <code> 0.95,
+nd = 3L, cutoff = 0.05, extra = TRUE)</code>: Prints a summary of the model
+parameter estimates, and the optimization process. See the man page of
+<code>summary,penfa-method</code> for details.</p></dd> <dt>coef</dt><dd><p><code>signature(object
+= "penfa", type = "free", labels = TRUE)</code>: Returns the estimates of the
+parameters in the model as a named numeric vector. See the man page of
+<code>coef,penfa-method</code> for details.</p></dd> <dt>fitted</dt><dd><p><code>signature(object =
+"penfa", labels = TRUE)</code>: Returns a list of the model-implied moments (per
+group). See the man page of <code>fitted,penfa-method</code> for details.</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Geminiani E., Marra G., Moustaki I. (under revision), "Single and
+    <p>Geminiani E., Marra G., Moustaki I. (under review), "Single and
 multiple-group penalized factor analysis: a trust-region algorithm approach
 with integrated automatic multiple tuning parameter selection".</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='penfa.html'>penfa</a></code>, <code><a href='penfaParEstim.html'>penfaParEstim</a></code>,
-<code><a href='show,penfa-method.html'>show,penfa-method</a></code>, <code><a href='summary,penfa-method.html'>summary,penfa-method</a></code>,
-<code><a href='coef,penfa-method.html'>coef,penfa-method</a></code>, <code><a href='show,penfa-method.html'>show,penfa-method</a></code></p></div>
+    <div class='dont-index'><p><code><a href='penfa.html'>penfa</a></code>, <code><a href='penfaParEstim.html'>penfaParEstim</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ccdata</span><span class='op'>)</span>
@@ -246,7 +277,18 @@ with integrated automatic multiple tuning parameter selection".</p>
                     <span class='co'>## automatic procedure</span>
                     strategy <span class='op'>=</span> <span class='st'>"auto"</span>,
                     gamma <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>alasso_fit</span>
+</div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
+#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00298271 
+#&gt; Iteration  2 : 0.00452604 
+#&gt; 
+#&gt; Largest absolute gradient value: 12.76355181
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [180.2917, 9189645]
+#&gt; Trust region iterations: 15 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 27.12936  </div><div class='input'><span class='va'>alasso_fit</span>
 </div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
 #&gt; 
 #&gt;   Number of observations                                    767
@@ -391,7 +433,7 @@ with integrated automatic multiple tuning parameter selection".</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra.</p>
+  <p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p>
 </div>
 
 <div class="pkgdown">

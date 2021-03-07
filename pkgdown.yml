@@ -2,8 +2,8 @@ pandoc: 2.11.2
 pkgdown: 1.6.1.9000
 pkgdown_sha: 9c95f00d2505ddd83c4722e019202370715d3a3d
 articles:
-  penalized-factor-analysis-grid: penalized-factor-analysis-grid.html
-  penalized-factor-analysis: penalized-factor-analysis.html
-  penalized-multigroup-factor-analysis: penalized-multigroup-factor-analysis.html
-last_built: 2021-03-07T13:11Z
+  01_penalized-factor-analysis: 01_penalized-factor-analysis.html
+  02_penalized-factor-analysis-grid: 02_penalized-factor-analysis-grid.html
+  03_penalized-multigroup-factor-analysis: 03_penalized-multigroup-factor-analysis.html
+last_built: 2021-03-07T15:02Z
 

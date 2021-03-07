@@ -3,6 +3,9 @@
     border-color: #dddddd;
     olor: #ffffff;
 }
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    background-color: #e9ecef;
+}
 
 /* Text color in header */
 .navbar-default .navbar-nav>li>a{
@@ -28,9 +31,14 @@
     color: #ffffff;
     background-color: transparent;
 }
-.navbar-default .navbar-link:hover {
-    color: #ffffff;
+/* black; for views from mobiles */
+.navbar-default .navbar-nav .open .dropdown-menu>li>a {
+    color: #000000;
 }
+.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #000000;
+}
+
 
 .fl      {color: #1b7cfa;} /* numbers*/
 .fu      {color: #1b7cfa;} /* function */

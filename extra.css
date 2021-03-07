@@ -6,6 +6,10 @@
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
     background-color: #e9ecef;
 }
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+    background-color: #e9ecef;
+}
+
 
 /* Text color in header */
 .navbar-default .navbar-nav>li>a{
@@ -21,15 +25,12 @@
 /* Colors for hover in header */
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
     color: #ffffff;
-    background-color: transparent;
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
     color: #ffffff;
-    background-color: transparent;
 }
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
     color: #ffffff;
-    background-color: transparent;
 }
 /* black; for views from mobiles */
 .navbar-default .navbar-nav .open .dropdown-menu>li>a {

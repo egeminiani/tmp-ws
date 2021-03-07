@@ -50,6 +50,8 @@ argument." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -61,9 +63,15 @@ argument." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -84,12 +92,6 @@ argument." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -106,7 +108,7 @@ argument." />
       <a href="../articles/penalized-factor-analysis.html">Penalized Factor Analysis</a>
     </li>
     <li>
-      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-group Factor Analysis</a>
+      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
   </ul>
 </li>
@@ -150,21 +152,20 @@ argument.</p>
 <code>penfa</code> function, organized in the following sections.</p>
 <p>Model features:</p>
 <dl>
-<dt><code>meanstructure</code>:</dt><dd><p>Logical. If <code>TRUE</code>, the means of the
-observed variables enter the model. Default to <code>FALSE</code>.</p></dd>
+<dt><code>meanstructure</code>:</dt><dd><p>Logical. If <code>TRUE</code>, a meanstructure is
+requested. It should be used in conjunction with <code>int.ov.free</code> and
+<code>int.lv.free</code> or intercept-like formulas in the model syntax.
+Default to <code>FALSE</code>.</p></dd>
 <dt><code>int.ov.free</code>:</dt><dd><p>Logical. If <code>FALSE</code>, the intercepts of the
 observed variables are fixed to zero. Default to <code>FALSE</code>.</p></dd>
 <dt><code>int.lv.free</code>:</dt><dd><p>Logical. If <code>FALSE</code>, the intercepts of the
 common factors are fixed to zero. Default to <code>FALSE</code>.</p></dd>
 <dt><code>orthogonal</code>:</dt><dd><p>Logical. If <code>TRUE</code>, all covariances among the
 common factors are set to zero. Default to <code>FALSE</code>.</p></dd>
-<dt><code>std.lv</code>:</dt><dd><p>Logical. If <code>TRUE</code>, the metric of each factor is
-determined by fixing its variance to 1.0. If <code>FALSE</code>, the
-metric of each factor is determined by fixing the factor loading of the first
-indicator to 1.0. Default to <code>FALSE</code>.</p></dd>
+<dt><code>std.lv</code>:</dt><dd><p>Logical. If <code>TRUE</code>, the factor variances are fixed
+to 1.0. Default to <code>FALSE</code>.</p></dd>
 <dt><code>auto.fix.first</code>:</dt><dd><p>Logical. If <code>TRUE</code>, the factor loading of
-the first indicator is set to 1.0 for every common factor. Default to
-<code>FALSE</code>.</p></dd>
+the first indicator is set to 1.0 for every factor. Default to <code>FALSE</code>.</p></dd>
 <dt><code>auto.fix.single</code>:</dt><dd><p>Logical. If <code>TRUE</code>, the residual variance
 (if included) of an observed indicator is set to zero if it is the only
 indicator of a common factor. Default to <code>FALSE</code>.</p></dd>
@@ -181,8 +182,8 @@ standardized before entering the analysis. Default to <code>FALSE</code>.</p></d
 <dt><code>information</code>:</dt><dd><p>Character. If <code>"fisher"</code>, the penalized
 expected Fisher information matrix is used as second-order derivatives
 in the trust-region algorithm and for computing the standard errors of the
-model parameters. If <code>"hessian"</code>, the penalized Hessian matrix of the
-log-likelihood is used.</p></dd>
+model parameters. If <code>"hessian"</code>, the penalized Hessian matrix
+is used.</p></dd>
 <dt><code>control</code>:</dt><dd><p>A list containing control parameters passed to the
 trust-region optimizer. See the manual page of <code>trust</code> from the
 <code>trust</code> package for an overview of its control parameters. Default
@@ -190,7 +191,7 @@ values for these parameters are <code>rinit=1L</code>, <code>rmax=100L</code>,
 <code>iterlim=1000L</code>, <br /> <code>fterm = sqrt(.Machine$double.eps)</code>,
 <code>mterm = sqrt(.Machine$double.eps)</code>.</p></dd>
 <dt><code>optim.dx.tol</code></dt><dd><p>Numeric. The tolerance value used when checking
-the size of the elements of the gradient of the log-likelihood. Default
+the size of the elements of the gradient of the objective function. Default
 equal to 100.</p></dd>
 
 </dl>
@@ -201,7 +202,7 @@ Default to 3.7, as recommended by Fan &amp; Li (2001).</p></dd>
 <dt><code>a.mcp</code></dt><dd><p>Numeric. The shape parameter of the mcp penalty. Default
 to 3.</p></dd>
 <dt><code>a.alasso</code></dt><dd><p>Numeric. The exponent in the adaptive weights for the
-alasso penalty.</p></dd>
+alasso penalty. Deafult to 1.</p></dd>
 <dt><code>weights</code></dt><dd><p>Numeric. Only valid when either <code>pen.shrink</code> or
 <code>pen.diff</code> is equal to "alasso". An optional vector of values provided
 by the user representing a consistent estimate for each model parameter. The
@@ -213,24 +214,23 @@ of the penalty functions. Default to 1e-08.</p></dd>
 
 Automatic procedure:
 <dt><code>gamma</code></dt><dd><p>Numeric. The value of the influence factor used in the
-automatic tuning parameter procedure. Default to 1.</p></dd>
+automatic tuning parameter procedure. Default to 4.</p></dd>
 <dt><code>user.start</code></dt><dd><p>Logical whether the user has provided a vector of
-starting values for the model parameter estimates to be used in the automatic
-procedure.</p></dd>
-<dt><code>start.val</code></dt><dd><p>Numeric. An optional value of parameter estimates to
-be used as starting values for the model parameters in the automatic
-procedure.</p></dd>
+starting values for the model parameter estimates.</p></dd>
+<dt><code>start.val</code></dt><dd><p>Numeric. An optional vector of parameter estimates to
+be used as starting values for the model parameters. This option is also
+internally used by the automatic procedure.</p></dd>
 
 </dl>
 
 <p>Verbosity options:</p><dl>
 <dt><code>verbose</code>:</dt><dd><p>Logical. If <code>TRUE</code>, some information on the
 estimation process (e.g., convergence and admissibility checks, effective
-degrees of freedom) are printed out. Default to <code>FALSE</code>.</p></dd>
+degrees of freedom) are printed out. Default to <code>TRUE</code>.</p></dd>
 <dt><code>warn</code>:</dt><dd><p>Logical. If <code>TRUE</code>, some warnings are printed out
 during the iterations. Default to <code>TRUE</code>.</p></dd>
 <dt><code>debug</code>:</dt><dd><p>Logical. If <code>TRUE</code>, debugging information is
-printed out. Default to <code>TRUE</code>.</p></dd>
+printed out. Default to <code>FALSE</code>.</p></dd>
 
 </dl>
 
@@ -286,7 +286,7 @@ printed out. Default to <code>TRUE</code>.</p></dd>
 #&gt; [1] 1e-08
 #&gt; 
 #&gt; $gamma
-#&gt; [1] 1
+#&gt; [1] 4
 #&gt; 
 #&gt; $user.start
 #&gt; [1] FALSE
@@ -295,7 +295,7 @@ printed out. Default to <code>TRUE</code>.</p></dd>
 #&gt; NULL
 #&gt; 
 #&gt; $verbose
-#&gt; [1] FALSE
+#&gt; [1] TRUE
 #&gt; 
 #&gt; $warn
 #&gt; [1] TRUE
@@ -316,11 +316,11 @@ printed out. Default to <code>TRUE</code>.</p></dd>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p>
+  <p><p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -328,6 +328,8 @@ printed out. Default to <code>TRUE</code>.</p></dd>
 
   
 
+
+  
 
   </body>
 </html>

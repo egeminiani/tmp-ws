@@ -55,6 +55,8 @@ achieve sparsity." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@ achieve sparsity." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -89,12 +97,6 @@ achieve sparsity." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -111,7 +113,7 @@ achieve sparsity." />
       <a href="../articles/penalized-factor-analysis.html">Penalized Factor Analysis</a>
     </li>
     <li>
-      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-group Factor Analysis</a>
+      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
   </ul>
 </li>
@@ -158,7 +160,7 @@ achieve sparsity.</p>
   pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
   pen.diff <span class='op'>=</span> <span class='st'>"none"</span>,
   eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>lambda <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>none <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
-  strategy <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  strategy <span class='op'>=</span> <span class='st'>"auto"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -198,28 +200,29 @@ equivalence across groups (see the <code>eta</code> argument for details on how
 to specify which model parameters shall be encouraged to be equivalent).
 Possible values for <code>pen.diff</code> are "lasso", "alasso" (i.e., adaptive
 lasso), "scad" (i.e., smoothly clipped  absolute deviation), "mcp" (i.e.,
-minimax concave penalty), "ridge", and "none" in case of no penalization.
-Note that the specification of <code>pen.diff</code> is only valid for
-multiple-group factor analyses when a <code>group</code> variable is defined.
-If the difference penalty is requested, the groups should have the same
-(number of) parameters.</p></td>
+minimax concave penalty), "ridge", and "none" in case of no difference
+penalization. Note that the specification of <code>pen.diff</code> is only valid
+for multiple-group factor analyses when a <code>group</code> variable is defined.
+If a difference penalty is requested, the groups must have the same
+parameters.</p></td>
     </tr>
     <tr>
       <th>eta</th>
-      <td><p>A named list containing the starting values of the tuning
+      <td><p>A named list containing the starting value(s) of the tuning
 parameter(s) if the automatic procedure is requested (<code>strategy =
-  "auto"</code>) or the fixed values of the tuning parameter(s) to be used during
+  "auto"</code>) or the fixed value(s) of the tuning parameter(s) to be used during
 optimization if <code>strategy = "fixed"</code>. The list has two components with
 names "shrink" and "diff", which refer to the tuning parameters to be used
 for shrinkage and group equivalence, respectively. The components of the
-list are, in turn, named vectors specifying the type of the parameter
+list are, in turn, named vectors specifying the type of parameter
 matrices or vectors to be penalized. Common choices are "lambda" for the
 loading matrix and "tau" for the intercept vector of the observed
 variables. Other possible values are "phi" for the factor covariance
 matrix, "psi" for the covariance matrix of the unique factors, and "kappa"
 for the factor means. By default, all non-fixed elements of the specified
-matrix/vector are penalized. Specifying both list names as "none" results
-in ordinary maximum likelihood estimation (no penalization).</p></td>
+matrix/vector are penalized. When <code>strategy = "fixed"</code> and the tuning
+values in <code>eta</code> are equal to zero, specifying both list names as "none"
+results in ordinary maximum likelihood estimation (no penalization).</p></td>
     </tr>
     <tr>
       <th>strategy</th>
@@ -257,7 +260,7 @@ as continuous. Categorical items are not currently supported. <br /></p>
     <p>The model syntax in the <code>model</code> argument describes the factor analysis
 model to be estimated, and specifies the relationships between the observed
 and latent variables (i.e., the common factors). To facilitate its
-formulation, the rules for the syntax specification follow the main ones in
+formulation, the rules for the syntax specification broadly follow the ones in
 the <a href='https://CRAN.R-project.org/package=lavaan'><code>lavaan</code></a> package.</p>
 <p>The model syntax is composed of one or multiple formula-like expressions
 describing specific parts of the model. The model syntax can be specified as
@@ -280,8 +283,7 @@ a literal string enclosed by single quotes as in the example below.</p>
                 factor1 ~ 1
                 '</span>
 </pre><p>Blank lines and comments can be used in between formulas, and formulas can be
-split over multiple lines. Both the sharp (#) and the exclamation (!)
-characters can be used to start a comment. Multiple formulas can be placed on
+split over multiple lines. Multiple formulas can be placed on
 a single line if they are separated by a semicolon (;).</p>
 <p>The current implementation allows for the following types of formula-like
 expressions in the model syntax:</p><ol>
@@ -317,9 +319,9 @@ instance, the formula</p>
 <p>On the right-hand side of these formula-like expressions, each element can be
 modified (using the <code>"*"</code> operator) by a numeric constant or the special
 function <code><a href='https://rdrr.io/r/stats/start.html'>start()</a></code>. This provides the user with a mechanism to fix
-parameters and provide alternative starting values. All <code>"*"</code>
-expressions are referred to as modifiers, and are explained in detail in the
-sections below.</p>
+parameters and provide alternative starting values, respectively. All
+<code>"*"</code> expressions are referred to as modifiers, and are explained in
+detail in the sections below.</p>
 <p>Each parameter in a model is automatically given a name consisting of three
 parts, that are coerced to a single character vector. The first part is the
 name of the variable on the left-hand side of the formula where the parameter
@@ -330,7 +332,7 @@ parameter is implied, or "1" if it is an intercept. The three parts are
 pasted together in a single string. For example, the name of the factor
 loading of <code>x2</code> on <code>factor1</code> is is the string <code>"factor1~x2"</code>.
 The name of the parameter corresponding to the factor covariance between
-<code>factor1</code> and <code>factor2</code> is the string <code>"factor1~~factor2"</code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Fixing parameters</h3>
+<code>factor1</code> and <code>factor2</code> is the string <code>"factor1~~factor2"</code>.</p><h3 class='hasAnchor' id='fixing-parameters'><a class='anchor' href='#fixing-parameters'></a>Fixing parameters</h3>
 
 
 <p>It is often desirable to fix a model parameter that is otherwise (by default)
@@ -349,7 +351,7 @@ restrictions:</p>
 <p>Notice that multiplying a certain parameter by <code>NA</code> forces it to be
 estimated.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Starting values</h3>
+<h3 class='hasAnchor' id='starting-values'><a class='anchor' href='#starting-values'></a>Starting values</h3>
 
 
 <p>User-defined starting values can be provided through the special function
@@ -360,10 +362,10 @@ provides a starting value equal to 0.8 to the loading of <code>x2</code> on
 <span class='va'>factor1</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/start.html'>start</a></span><span class='op'>(</span><span class='fl'>0.8</span><span class='op'>)</span><span class='op'>*</span><span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='va'>x4</span> <span class='op'>+</span> <span class='va'>x5</span> <span class='op'>+</span> <span class='va'>x6</span></pre>
 
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Multiple groups</h3>
+<h3 class='hasAnchor' id='multiple-groups'><a class='anchor' href='#multiple-groups'></a>Multiple groups</h3>
 
 
-<p>In multiple group factor analysis, the modifiers containing a single element
+<p>In a multiple group factor analysis, the modifiers containing a single element
 should be replaced by a vector with the same length as the number of groups.
 If a single element is provided, it is recycled for all groups. In the
 example below with two groups, the factor loadings of <code>x1</code> on
@@ -371,8 +373,9 @@ example below with two groups, the factor loadings of <code>x1</code> on
 of <code>x4</code> are fixed to 0.75 and 0.85 for the first and second group,
 respectively.</p>
 <pre>
-<span class='va'>multigroup_syntax</span> <span class='op'>&lt;-</span> <span class='st'>' factor1 ~ 0.8*x1 + x2 + x3 +               x4 + x5 + x6
-                        factor2 ~      x1 + x2 + x3 + c(0.75, 0.85)*x4 + x5 + x6 '</span></pre>
+<span class='va'>multigroup_syntax</span> <span class='op'>&lt;-</span> <span class='st'>'
+ factor1 ~  0.8*x1 + x2 + x3 +               x4 + x5 + x6
+ factor2 ~      x1 + x2 + x3 + c(0.75, 0.85)*x4 + x5 + x6 '</span></pre>
 
 
     <h2 class="hasAnchor" id="algorithm"><a class="anchor" href="#algorithm"></a>Algorithm</h2>
@@ -397,15 +400,15 @@ near the current point and within a trust-region (usually a ball) is similar
 to that of the actual objective function. The algorithm exploits second-order
 analytical derivative information. This can come in the form of the penalized
 Hessian matrix (if <code>information = "hessian"</code>) or the penalized Fisher
-information matrix (if <code>information = "fisher"</code>). If the model includes
-a mean structure (<code>meanstructure = TRUE</code>), <code>penfa</code> fits the model
-with the penalized Fisher information matrix, as it exhibits similar
-performances to the penalized Hessian at a reduced computational cost. <br /></p>
+information matrix (if <code>information = "fisher"</code>). Models with a
+meanstructure can be only estimated with the penalized Fisher information
+matrix, which exhibits similar performances to the penalized Hessian at a
+reduced computational cost. <br /></p>
     <h2 class="hasAnchor" id="tuning-parameter-selection"><a class="anchor" href="#tuning-parameter-selection"></a>Tuning parameter selection</h2>
 
     <p>The selection of the tuning parameters is a crucial issue in penalized
 estimation strategies, as the tuning parameters are responsible for the
-optimal balance between goodness of fit and sparsity.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Automatic procedure</h3>
+optimal balance between goodness of fit and sparsity.</p><h3 class='hasAnchor' id='automatic-procedure'><a class='anchor' href='#automatic-procedure'></a>Automatic procedure</h3>
 
 
 <p>The penalized framework discussed above is easily integrated with automatic
@@ -419,39 +422,37 @@ computationally intensive grid-searches.</p>
 with the automatic procedure.</p>
 <p>The automatic procedure returns the optimal value of the tuning parameter.
 Notice, however, that the parameter estimates from this model will slightly
-differ from the ones one would obtain by setting <code>strategy = "grid"</code> and
+differ from the ones one would obtain by setting <code>strategy = "fixed"</code> and
 <code>eta</code> equal to that optimal tuning value. This is due to the different
 starting values employed in the two scenarios. In the automatic procedure,
 the starting values of the final model come from the ones of the previous
 model in the optimization loop; in the fixed-tuning context, the starting
 values come from the default ones in <code>penfa</code>.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Grid-search</h3>
+<h3 class='hasAnchor' id='grid-search'><a class='anchor' href='#grid-search'></a>Grid-search</h3>
 
 
 <p>If <code>strategy = "fixed"</code>, <code>penfa</code> estimates a penalized factor model
 with the value of the tuning parameter stored in <code>eta</code>. This is useful
 if users wish to make multiple calls to the <code>penfa</code> function using a
 range of values for the tuning parameter. Then, the optimal penalized model
-is picked on the basis of information criteria (stored in the
-<code>Inference$IC</code> argument of the final fitted object). It is often
-convenient to use the (Generalized) Bayesian Information Criterion as a
-selector, due to its recurrent use in sparse settings.</p>
-<p>All the reported information criteria use the theoretical definition of the
-effective degrees of freedom (<em>edf</em>) as their bias terms. This is
-because the use of differentiable penalty approximations make the objective
-function twice-continuously differentiable. The total <code>edf</code> are then
-found as the sum of the effective degree of freedom for each model parameter,
-which ranges from 0 to 1 and quantifies the extend to which each parameter
-has been penalized. <br /></p>
+can be picked on the basis of information criteria, which are easily computed
+by calling the <code>AIC</code> and <code>BIC</code> functions. It is often convenient
+to use the (Generalized) Bayesian Information Criterion as a selector, due to
+its recurrent use in sparse settings.</p>
+<p>These information criteria use the theoretical definition of the effective
+degrees of freedom (<em>edf</em>) as their bias terms. This is because the use
+of differentiable penalty approximations make the objective function
+twice-continuously differentiable. The total <code>edf</code> are as the sum of the
+effective degree of freedom for each model parameter, which ranges from 0 to
+1 and quantifies the extend to which each parameter has been penalized. <br /></p>
 
     <h2 class="hasAnchor" id="penalization"><a class="anchor" href="#penalization"></a>Penalization</h2>
 
-    <p>By default, the <code>penfa</code> function penalizes every element in the
-parameter matrix/vector specified in its <code>eta</code> argument. For instance,
-if <code>eta = list("shrink" = c("lambda" = 0.01), "diff" = c("none" = 0))</code>
-all factor loadings are penalized. If <code>eta = list("shrink" = c("none" =
-0), "diff" = c("none" = 0))</code> , none of the model parameters are penalized.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Which penalty to chose?</h3>
+    <p>The <code>penfa</code> function penalizes every element in the parameter
+matrix/vector specified in the <code>eta</code> argument. For instance, if
+<code>eta = list("shrink" = c("lambda" = 0.01), "diff" = c("none" = 0))</code> all
+factor loadings are penalized.</p><h3 class='hasAnchor' id='choosing-the-penalty-function'><a class='anchor' href='#choosing-the-penalty-function'></a>Choosing the penalty function</h3>
 
 
 <p>It may be beneficial to try out different penalties, and see which one works
@@ -469,16 +470,16 @@ analyses), for which the automatic procedure is the only feasible alternative
 to otherwise computationally intensive multi-dimensional grid-searches.</p></li>
 </ul>
 
-<p>Geminiani, Marra, and Moustaki (under review) performed numerical and
+<p>Geminiani, Marra, and Moustaki (in press) performed numerical and
 empirical examples to evaluate and compare the performance of single and
 multiple-group penalized factor models under different penalty functions. The
 alasso penalty generally produced the best trade-off between sparsity and
 goodness of fit. However, unlike other penalties, the alasso requires a set
 of adaptive weights. In some situations, the weights might not be available,
 or might be difficult to obtain. If this is the case, users are encouraged to
-resort to other simpler penalties. <br /></p>
+resort to simpler penalties. <br /></p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>More sparsity</h3>
+<h3 class='hasAnchor' id='more-sparsity'><a class='anchor' href='#more-sparsity'></a>More sparsity</h3>
 
 
 <p>The penalized model automatically tries to generate the optimal trade-off
@@ -502,20 +503,18 @@ value in the option <code>eta</code> to encourage more sparsity. When doing so, 
 is helpful to first do some trials and understand a reasonable range of
 values that the tuning parameter can take. <br /></p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Ordinary Maximum Likelihood</h3>
+<h3 class='hasAnchor' id='ordinary-maximum-likelihood'><a class='anchor' href='#ordinary-maximum-likelihood'></a>Ordinary Maximum Likelihood</h3>
 
 
-<p>In case of a single-group analysis, <code>pen.shrink = "none"</code> reduces to the
-estimation of the unpenalized model by ordinary maximum likelihood. In case
-of a multiple-group analysis, if both <code>pen.shrink = "none"</code> and
-<code>pen.diff = "none"</code>, the <code>penfa</code> function estimates an unpenalized
-multiple-group factor model by maximum likelihood. <br /></p>
+<p>If <code>strategy = "fixed"</code>, <code>pen.shrink = "none"</code>, <code>pen.diff =
+"none"</code>, and <code>eta = list("shrink" = c("none" = 0), "diff" = c("none" =
+0))</code>, no penalization is applied, and the model is estimated through ordinary
+maximum likelihood. <br /></p>
 
     <h2 class="hasAnchor" id="convergence-amp-admissibility"><a class="anchor" href="#convergence-amp-admissibility"></a>Convergence &amp; Admissibility</h2>
 
-    <p>The function <code>penfa</code> internally assess the convergence of the fitted
-model via the <code>convcheck</code> function, and the admissibility of the final
-solution via the <code>is_Admissible</code> function.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Convergence</h3>
+    <p>The function <code>penfa</code> internally assesses the convergence of the fitted
+model, and the admissibility of the final solution.</p><h3 class='hasAnchor' id='convergence'><a class='anchor' href='#convergence'></a>Convergence</h3>
 
 
 <p>The convergence checks assess whether the penalized gradient vector is close
@@ -527,7 +526,7 @@ gradient need not be strictly close to zero to obtain meaningful results. It
 is enough that its element do not exceed a pre-specified threshold, whose
 value can be changed through the <code>optim.dx.tol</code> option.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Admissibility</h3>
+<h3 class='hasAnchor' id='admissibility'><a class='anchor' href='#admissibility'></a>Admissibility</h3>
 
 
 <p>The admissibility checks are carried out to determine whether the final
@@ -544,7 +543,7 @@ sequentially checks whether:</p><ol>
 <p>In case of multiple-group analyses, the function checks the admissibility of
 the parameter matrices of each group. If any of the above conditions are not
 satisfied, the <code>penfa</code> function warns the users with explanatory
-messages on the reason why. <br /></p>
+messages on the reasons why. <br /></p>
 
     <h2 class="hasAnchor" id="warnings-amp-errors"><a class="anchor" href="#warnings-amp-errors"></a>Warnings &amp; Errors</h2>
 
@@ -556,21 +555,20 @@ through the following steps:</p>
 minimum identification restrictions are satisfied. This implies fixing the
 scale and the origin of every factor in each group. In addition, other
 constraints - which usually come in the form of zero-restricted loadings -
-are necessary for removing rotational freedom.</p></li>
-<li><p>Starting values: the
-choice of starting values is of paramount importance when it comes to
-convergence. The starting values internally used by <code>penfa</code> correspond
-to the ones used by the
-<a href='https://CRAN.R-project.org/package=lavaan'><code>lavaan</code></a> package. If
-users have some prior knowledge or intuition about possible values for some
-of the parameters, it might be beneficial to include this information by
-providing the starting values for those parameters in the syntax
-specification (see below for additional details). For instance, depending on
-the case, specifying the starting values of the primary loadings equal to 1
-(<code>start(1)*x1 + ...</code>) often results in more stable optimization
-processes, especially when dealing with complicated models that require the
-estimation of many parameters, as in multiple-group penalized factor
-analysis.</p></li>
+are necessary due to rotational freedom.</p></li>
+<li><p>Starting values: the choice of the starting values is of paramount
+importance when it comes to convergence. The starting values internally used
+by <code>penfa</code> correspond to the ones used by the
+<a href='https://CRAN.R-project.org/package=lavaan'><code>lavaan</code></a> package for
+<code>confirmatory factor analysis</code>. If users have some prior knowledge or
+intuition about possible values for some of the parameters, it might be
+beneficial to include this information by providing the starting values for
+those parameters in the syntax specification (see below for additional
+details). For instance, depending on the case, specifying the starting values
+of the primary loadings equal to 1 (<code>start(1)*x1 + ...</code>) often results
+in more stable optimization processes, especially when dealing with
+complicated models that require the estimation of many parameters, as in
+multiple-group penalized factor analysis.</p></li>
 <li><p>Sample size: the penalized models fitted by <code>penfa</code> have
 a larger number of parameters than confirmatory factor analytic applications.
 This complexity should be accompanied by a reasonable sample size. If the
@@ -578,19 +576,19 @@ sample size is too small for the complexity of the model, convergence issues
 will arise. In case of small sample sizes, it might in principle be more
 reliable to select the tuning parameter through a grid-search with the BIC
 instead of using the the automatic procedure.</p></li>
-<li><p>Automatic procedure: if
-the starting values of the tuning parameters prevent the automatic procedure
-from finding the optimal estimates of the tuning parameters, the procedure is
-repeated with different starting values. If even this estimation fails, a
-warning is printed out.</p></li>
-<li><p>Adaptive weights: when using the alasso
-penalty, the user is advised to provide a vector of adaptive weights. These
-often come in the form of (unpenalized) maximum likelihood estimates. If no
-vector of weights is provided, the <code>penfa</code> function internally estimates
-an unpenalized MLE model whose parameter estimates will serve as weights. If
-the unpenalized model does not converge, the <code>penfa</code> function internally
-estimates a ridge-regularized factor model and uses the resulting estimates
-as weights. If even this estimation fails, a warning is printed out. <br /></p></li>
+<li><p>Automatic procedure: if the starting values of the tuning parameters
+prevent the automatic procedure from finding the optimal estimates of the
+tuning parameters, the procedure is repeated with different starting values.
+If even this estimation fails, an error is printed out.</p></li>
+<li><p>Adaptive weights: when using the alasso penalty, it is suggested to
+manually provide a vector of adaptive weights, especially for complex models.
+The adaptive weights often come in the form of (unpenalized) maximum
+likelihood estimates. If no vector of weights is provided, the <code>penfa</code>
+function internally estimates an unpenalized MLE model whose parameter
+estimates will serve as weights. If the unpenalized model does not converge,
+the <code>penfa</code> function internally estimates a ridge-regularized factor
+model and uses the resulting estimates as weights. If even this estimation
+fails, an error is printed out. <br /></p></li>
 </ol>
 
 <p>Ultimately, if none of the above succeeds, users shall consider re-specifying
@@ -600,7 +598,7 @@ restrictions (for instance, by specifying some additional fixed loadings)
 might be advantageous. Also, as a general practice, when conducting a
 multiple-group analysis, make sure beforehand that the groups share similar
 factor structures: if the groups have different factor configurations, the
-final results will be meaningless.</p>
+final results will be distorted.</p>
 <p>It is always important to assess whether the distributional assumptions of
 the normal linear factor model hold. The <code>penfa</code> function fits penalized
 factor models to continuous observed variables; this excludes categorical
@@ -618,12 +616,12 @@ should take extra caution when using the standard errors associated with the
 penalized parameters that were shrunken to zero. <br /></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Geminiani E. (2020), "A penalized likelihood-based framework for single and
+    <p>Geminiani E., Marra G., Moustaki I. (in press), "Single and
+multiple-group penalized factor analysis: a trust-region algorithm approach
+with integrated automatic multiple tuning parameter selection". Psychometrika</p>
+<p>Geminiani E. (2020), "A penalized likelihood-based framework for single and
 multiple-group factor analysis models" (Doctoral dissertation, University of
 Bologna). Available at <a href='http://amsdottorato.unibo.it/9355/'>http://amsdottorato.unibo.it/9355/</a>.</p>
-<p>Geminiani E., Marra G., Moustaki I. (under review), "Single and
-multiple-group penalized factor analysis: a trust-region algorithm approach
-with integrated automatic multiple tuning parameter selection".</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='penfa-class.html'>penfa-class</a></code></p></div>
@@ -677,7 +675,7 @@ with integrated automatic multiple tuning parameter selection".</p>
 #&gt;     Sparsity                                             alasso
 #&gt;                                                                
 #&gt;                                                                </div><div class='input'>
-<span class='co'>### Multiple-group analysis (mean structure, marker-variable approach)</span>
+<span class='co'>### Multiple-group analysis (mean structure, marker-variable approach, starting values)</span>
 <span class='va'>syntax_mg</span> <span class='op'>=</span> <span class='st'>'
 help  =~ 1*h1 +          h2 +          h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
 voice =~ 0*h1 + start(0)*h2 + start(0)*h3 + h4 + h5 + h6 + h7 + 1*v1 + v2 + v3 + v4 + v5
@@ -691,7 +689,8 @@ h1 + v1 ~ 0*1 '</span>
                    int.lv.free <span class='op'>=</span> <span class='cn'>TRUE</span>,
                    pen.shrink <span class='op'>=</span> <span class='st'>"none"</span>,
                    pen.diff <span class='op'>=</span> <span class='st'>"none"</span>,
-                   eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+                   eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
+                   strategy <span class='op'>=</span> <span class='st'>"fixed"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Largest absolute gradient value: 0.00108292
 #&gt; Fisher information matrix is positive definite
@@ -760,11 +759,11 @@ h1 + v1 ~ 0*1 '</span>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p>
+  <p><p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -772,6 +771,8 @@ h1 + v1 ~ 0*1 '</span>
 
   
 
+
+  
 
   </body>
 </html>

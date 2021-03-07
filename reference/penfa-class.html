@@ -44,8 +44,10 @@
 <meta property="og:title" content="S4 Class for representing a (fitted) penfa model — penfa-class" />
 <meta property="og:description" content="The penfa class represents a (fitted) penalized factor
 analysis model. It contains a description of the model as specified by the
-user, a summary of the data, an internal matrix representation, and the
-fitting results." />
+user, a summary of the data, an internal matrix representation, the
+fitting results, and the penalized quantities." />
+
+
 
 
 
@@ -61,9 +63,15 @@ fitting results." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -84,12 +92,6 @@ fitting results." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -106,7 +108,7 @@ fitting results." />
       <a href="../articles/penalized-factor-analysis.html">Penalized Factor Analysis</a>
     </li>
     <li>
-      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-group Factor Analysis</a>
+      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
   </ul>
 </li>
@@ -137,16 +139,18 @@ fitting results." />
     <div class="ref-description">
     <p>The <code>penfa</code> class represents a (fitted) penalized factor
 analysis model. It contains a description of the model as specified by the
-user, a summary of the data, an internal matrix representation, and the
-fitting results.</p>
+user, a summary of the data, an internal matrix representation, the
+fitting results, and the penalized quantities.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="objects-from-the-class"><a class="anchor" href="#objects-from-the-class"></a>Objects from the Class</h2>
 
-    <p>Objects can be created via the
-<code><a href='penfa.html'>penfa</a></code> function.</p>
+    
+
+
+<p>Objects can be created via the <code><a href='penfa.html'>penfa</a></code> function.</p>
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
     
@@ -181,13 +185,12 @@ class for additional details.</p></dd>
 includes the estimated parameters (<code>x</code>), the number of estimated
 parameters (<code>npar</code>), the number of trust-region iterations
 (<code>iterations</code>), the value of the penalized objective function
-(<code>fx.pen</code>; this is multiplied by N, so that furtherly multiplying it by
-(-1) gives the penalized log-likelihood), the group values of the penalized
-objective function (<code>fx.pen.group</code>), the unpenalized objective function
-(<code>logl</code>), the group-values of the unpenalized objective function
-(<code>logl.group</code>), the penalized gradient of the objective function
-(<code>dx.pen</code>), the penalized Hessian/Fisher information matrix of the
-objective function (<code>hessian.pen</code>), the list of control arguments for
+(<code>fx.pen</code>), the value of the unpenalized objective
+function (<code>fx.unpen</code>), the penalized log-likelihood (<code>logl.pen</code>;
+this is equal to <code>fx.pen</code> multiplied by (-1)), the unpenalized
+log-likelihood (<code>logl.unpen</code>; this is equal to <code>fx.unpen</code> multiplied
+by (-1)), the penalized gradient (<code>dx.pen</code>), the penalized Hessian/Fisher
+information matrix (<code>hessian.pen</code>), the list of control arguments for
 the trust-region algorithm (<code>control</code>), and how many times the
 objective function became non-positive definite during the estimation
 process (<code>npd</code>). If penfa was called with the option <code>verbose =
@@ -196,15 +199,13 @@ function <code>trust</code> are reported in the <code>Optim</code> slot: <code>a
 <code>argtry</code>, <code>type</code>, <code>accept</code>, <code>radii</code>, <code>rho</code>,
 <code>fx.val</code>, <code>fx.valtry</code>, <code>change</code>, <code>stepnorm</code>. See the
 manual page of <code>trust</code> from the <code>trust</code> package for an overview of
-these quantities. FIXME</p></dd>
+these quantities.</p></dd>
 <dt><code>Penalize</code>:</dt><dd><p>Object of internal class <code>"penfaPenalty"</code>; contains
 information about the penalization. See the <code><a href='penfaPenalty-class.html'>penfaPenalty</a></code> for
 additional details.</p></dd>
 <dt><code>Implied</code>:</dt><dd><p>List. Model-implied moments (covariance matrix and
 mean vector).</p></dd>
-<dt><code>Loglik</code>:</dt><dd><p>List. Information about the log-likelihood of
-the unpenalized factor model. FIXME</p></dd>
-<dt><code>Vcov</code>:</dt><dd><p>List. Information about the variance matrix (vcov) of
+<dt><code>Vcov</code>:</dt><dd><p>List. Information about the covariance matrix (vcov) of
 the model parameters. This slot includes the following quantities:  the type
 of penalized information matrix used in the model (either Hessian or Fisher;
 <code>information</code>), the vcov matrix of parameters (<code>vcov</code>), whether
@@ -215,14 +216,12 @@ estimated factor solution was admissible (<code>admissibility</code>), the
 standard errors computed according to the Bayesian result from the
 information matrix reported in <code>information</code> (<code>se</code>), and the 95%
 confidence intervals (<code>ci</code>).</p></dd>
-<dt><code>H1</code>:</dt><dd><p>List. Information about the unrestricted (unpenalized) H1
-model, including the implied moments and log-likelihood.</p></dd>
 <dt><code>Inference</code>:</dt><dd><p>List. Information on effective degrees of the model
 and information criteria for model selection. This slot reports the
 following quantities: effective degree of freedom for each parameter
-(<code>Edf.single</code>), total edf (<code>edf</code>), influence matrix
+(<code>edf.single</code>), total edf (<code>edf</code>), influence matrix
 (<code>influence.mat</code>), generalized information criteria (<code>IC</code>), such
-as AIC, BIC, AIC3, CAIC, BIC, ABIC, HBIC.</p></dd>
+as AIC and BIC.</p></dd>
 <dt><code>external</code>:</dt><dd><p>List. Empty slot.</p></dd>
 
 </dl>
@@ -254,9 +253,9 @@ group). See the man page of <code>fitted,penfa-method</code> for details.</p></d
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Geminiani E., Marra G., Moustaki I. (under review), "Single and
+    <p>Geminiani E., Marra G., Moustaki I. (in press), "Single and
 multiple-group penalized factor analysis: a trust-region algorithm approach
-with integrated automatic multiple tuning parameter selection".</p>
+with integrated automatic multiple tuning parameter selection". Psychometrika</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='penfa.html'>penfa</a></code>, <code><a href='penfaParEstim.html'>penfaParEstim</a></code></p></div>
@@ -275,8 +274,7 @@ with integrated automatic multiple tuning parameter selection".</p>
                     pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
                     eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
                     <span class='co'>## automatic procedure</span>
-                    strategy <span class='op'>=</span> <span class='st'>"auto"</span>,
-                    gamma <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+                    strategy <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
 #&gt; 
 #&gt; Automatic procedure: 
@@ -433,11 +431,11 @@ with integrated automatic multiple tuning parameter selection".</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p>
+  <p><p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -445,6 +443,8 @@ with integrated automatic multiple tuning parameter selection".</p>
 
   
 
+
+  
 
   </body>
 </html>

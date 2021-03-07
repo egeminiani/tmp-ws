@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model-implied constructor for a penfa object — fitted,penfa-method • penfa</title>
+<title>Model-implied moments for a penfa object — fitted,penfa-method • penfa</title>
 
 
 <!-- jquery -->
@@ -41,11 +41,14 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Model-implied constructor for a penfa object — fitted,penfa-method" />
-<meta property="og:description" content="An S4 method returning the model-implied moments as a list with two elements
-(per group) for an object of class penfa. cov for the implied
-covariance matrix, and mean for the implied mean vector. If only the
-covariance matrix is analyzed, the implied mean vector is zero." />
+<meta property="og:title" content="Model-implied moments for a penfa object — fitted,penfa-method" />
+<meta property="og:description" content="An S4 method returning the model-implied moments for an object of class
+penfa. For every group, a list with the model-implied  moments is returned:
+cov contains the implied covariance matrix, and mean the implied
+mean vector. If just the covariance matrix is analyzed, only the cov
+argument is returned." />
+
+
 
 
 
@@ -61,9 +64,15 @@ covariance matrix is analyzed, the implied mean vector is zero." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -84,12 +93,6 @@ covariance matrix is analyzed, the implied mean vector is zero." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -106,7 +109,7 @@ covariance matrix is analyzed, the implied mean vector is zero." />
       <a href="../articles/penalized-factor-analysis.html">Penalized Factor Analysis</a>
     </li>
     <li>
-      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-group Factor Analysis</a>
+      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
   </ul>
 </li>
@@ -129,16 +132,17 @@ covariance matrix is analyzed, the implied mean vector is zero." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model-implied constructor for a <code>penfa</code> object</h1>
+    <h1>Model-implied moments for a <code>penfa</code> object</h1>
     
     <div class="hidden name"><code>fitted-penfa-method.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An S4 method returning the model-implied moments as a list with two elements
-(per group) for an object of class <code>penfa</code>. <code>cov</code> for the implied
-covariance matrix, and <code>mean</code> for the implied mean vector. If only the
-covariance matrix is analyzed, the implied mean vector is zero.</p>
+    <p>An S4 method returning the model-implied moments for an object of class
+<code>penfa</code>. For every group, a list with the model-implied  moments is returned:
+<code>cov</code> contains the implied covariance matrix, and <code>mean</code> the implied
+mean vector. If just the covariance matrix is analyzed, only the <code>cov</code>
+argument is returned.</p>
     </div>
 
     <pre class="usage"><span class='co'># S4 method for penfa</span>
@@ -168,7 +172,37 @@ according to the item names used in the model syntax.</p></td>
 <span class='co'>## --- Continuing the Examples from penfa man page:</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>utils</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='st'>"penfa"</span>, echo <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
+#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00298271 
+#&gt; Iteration  2 : 0.00452604 
+#&gt; 
+#&gt; Largest absolute gradient value: 12.76355181
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [180.2917, 9189645]
+#&gt; Trust region iterations: 15 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 27.12936  
+#&gt; 
+#&gt; Largest absolute gradient value: 0.00108292
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [2.904073, 76169.99]
+#&gt; Trust region iterations: 22 
+#&gt; Factor solution: admissible 
+#&gt; Computing VCOV ... done.
+#&gt; Effective degrees of freedom: 94  
+#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00215339 3061215.60016969 0.00275238 
+#&gt; Iteration  2 : 0.00196556 31104.27952631 0.00807834 
+#&gt; 
+#&gt; Largest absolute gradient value: 68.08486896
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [53.35061, 9.10331e+12]
+#&gt; Trust region iterations: 23 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 56.76456  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $cov
 #&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
 #&gt; h1 0.974                                                                  
@@ -241,11 +275,11 @@ according to the item names used in the model syntax.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra.</p>
+  <p><p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -253,6 +287,8 @@ according to the item names used in the model syntax.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

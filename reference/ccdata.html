@@ -43,11 +43,14 @@
 
 <meta property="og:title" content="Data set for cross-cultural analysis — ccdata" />
 <meta property="og:description" content="A data set for cross-cultural analysis containing the
-standardized scores to 13 items concerning employers' attitudes of helping
-other employees and giving communications and suggestions aimed at
-improving the work conditions and products. The items are thought to
-underlie two latent constructs: helping behavior (first seven items)
-and voice behavior (last five items). See below for details." />
+standardized ratings to 12 items concerning organizational citizenship
+behavior. Employers from different countries were asked to rate their
+attitudes towards helping other employees and giving suggestions for
+improved work conditions. The items are thought to underlie two latent
+factors: helping behavior (first seven items) and voice behavior
+(last five items). See below for details." />
+
+
 
 
 
@@ -63,9 +66,15 @@ and voice behavior (last five items). See below for details." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -86,12 +95,6 @@ and voice behavior (last five items). See below for details." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -108,7 +111,7 @@ and voice behavior (last five items). See below for details." />
       <a href="../articles/penalized-factor-analysis.html">Penalized Factor Analysis</a>
     </li>
     <li>
-      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-group Factor Analysis</a>
+      <a href="../articles/penalized-multigroup-factor-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
   </ul>
 </li>
@@ -138,11 +141,12 @@ and voice behavior (last five items). See below for details." />
 
     <div class="ref-description">
     <p>A data set for cross-cultural analysis containing the
-standardized scores to 13 items concerning employers' attitudes of helping
-other employees and giving communications and suggestions aimed at
-improving the work conditions and products. The items are thought to
-underlie two latent constructs: <strong>helping</strong> behavior (first seven items)
-and <strong>voice</strong> behavior (last five items). See below for details.</p>
+standardized ratings to 12 items concerning organizational citizenship
+behavior. Employers from different countries were asked to rate their
+attitudes towards helping other employees and giving suggestions for
+improved work conditions. The items are thought to underlie two latent
+factors: <strong>helping</strong> behavior (first seven items) and <strong>voice</strong> behavior
+(last five items). See below for details.</p>
     </div>
 
     <pre class="usage"><span class='va'>ccdata</span></pre>
@@ -150,61 +154,54 @@ and <strong>voice</strong> behavior (last five items). See below for details.</p
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 767 rows and 13 items:</p>
+    <p>A data frame with 767 rows and 13 variables:</p>
 <dl>
-<dt>country</dt><dd><p>Country of origin of the employee.</p></dd>
-<dt>h1</dt><dd><p>Standardized
-scores to the question <em>I volunteer to do things for this organization</em>.</p></dd>
-<dt>h2</dt><dd><p>Standardized scores to the question <em>I help orient new employees
-in this organization</em>.</p></dd>
-<dt>h3</dt><dd><p>Standardized scores to the question <em>I
-attend functions that help this organization</em>.</p></dd>
-<dt>h4</dt><dd><p>Standardized
-scores to the question <em>I assist others in this organization for the
-benefit of the organization</em>.</p></dd>
-<dt>h5</dt><dd><p>Standardized scores to the
-question <em>I get involved to benefit this organization</em>.</p></dd>
-<dt>h6</dt><dd><p>Standardized scores to the question <em>I help others in this
-organization learn about the work</em>.</p></dd>
-<dt>h7</dt><dd><p>Standardized scores to the
-question <em>I help others in this organization with their work
-responsibilities</em>.</p></dd>
-<dt>v1</dt><dd><p>Standardized scores to the question <em>I
-develop and make recommendations concerning issues that affect this
-organization</em>.</p></dd>
-<dt>v2</dt><dd><p>Standardized scores to the question <em>I speak up
+<dt>country</dt><dd><p>Character. Country of origin of the employee: Lebanon ("LEB") or Taiwan
+("TAIW").</p></dd>
+<dt>h1</dt><dd><p>Numeric. Standardized ratings to the item "<em>I volunteer to do
+things for this organization</em>".</p></dd>
+<dt>h2</dt><dd><p>Numeric.  Standardized ratings to the item "<em>I help orient new
+employees in this organization</em>".</p></dd>
+<dt>h3</dt><dd><p>Numeric. Standardized ratings to the item "<em>I attend functions that
+help this organization</em>".</p></dd>
+<dt>h4</dt><dd><p>Numeric. Standardized ratings to the item "<em>I assist others in this
+organization for the benefit of the organization</em>".</p></dd>
+<dt>h5</dt><dd><p>Numeric. Standardized ratings to the item "<em>I get involved to
+benefit this organization</em>".</p></dd>
+<dt>h6</dt><dd><p>Numeric. Standardized ratings to the item "<em>I help others in this
+organization learn about the work</em>".</p></dd>
+<dt>h7</dt><dd><p>Numeric. Standardized ratings to the item "<em>I help others in this
+organization with their work responsibilities</em>".</p></dd>
+<dt>v1</dt><dd><p>Numeric. Standardized ratings to the item "<em>I develop and make
+recommendations concerning issues that affect this organization</em>".</p></dd>
+<dt>v2</dt><dd><p>Numeric. Standardized ratings to the item "<em>I speak up
 and encourage other in this organization to get involved in issues that
-affect the group</em>.</p></dd>
-<dt>v3</dt><dd><p>Standardized scores to the question <em>I
+affect the group</em>".</p></dd>
+<dt>v3</dt><dd><p>Numeric. Standardized ratings to the item "<em>I
 communicate my opinions about work issues to others in this organization
 even if my opinion is different and others in the organization disagree
-with me</em>.</p></dd>
-<dt>v4</dt><dd><p>Standardized scores to the question <em>I keep well
-informed about issues where my opinion might be useful to this
-organization</em>.</p></dd>
-<dt>v5</dt><dd><p>Standardized scores to the question <em>I get
-involved in issues that affect the quality of work life here in this
-organization</em>.</p></dd>
+with me</em>".</p></dd>
+<dt>v4</dt><dd><p>Numeric. Standardized ratings to the item "<em>I keep well informed
+about issues where my opinion might be useful to this organization</em>".</p></dd>
+<dt>v5</dt><dd><p>Numeric. Standardized ratings to the item "<em>I get involved in
+issues that affect the quality of work life here in this organization</em>".</p></dd>
 
 </dl>
 
-<p>TODO: Standardized scores to the question <em>I speak up
-in this organization with ideas for new projects or changes in
-procedures</em>.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>The original data set is available at
-<a href='https://github.com/Jo-Karl/ccpsyc/tree/master/data/'>https://github.com/Jo-Karl/ccpsyc/tree/master/data/</a>
-For a thorough description and analysis of these data, please refer to
-<a href='https://www.frontiersin.org/articles/10.3389/fpsyg.2019.01507/full'>Fischer and Karl (2019)</a>
-and <a href='https://link.springer.com/article/10.1057/s41267-017-0132-6'>Fischer et al. (2019)</a>.</p>
+    <p>The original data set is available from the
+<a href='https://github.com/Jo-Karl/ccpsyc/tree/master/data/'><code>ccpsych</code></a> package.
+Please refer to <a href='https://www.frontiersin.org/articles/10.3389/fpsyg.2019.01507/full'>Fischer and Karl (2019)</a>
+and <a href='https://link.springer.com/article/10.1057/s41267-017-0132-6'>Fischer et al. (2019)</a> for a
+thorough description and analysis of these data.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The data come from the
-<a href='https://github.com/Jo-Karl/ccpsyc/'><code>ccpsych</code></a> package, but the following
-pre-processing has been applied:</p><ul>
+    <p>The original data come from the
+<a href='https://github.com/Jo-Karl/ccpsyc/'><code>ccpsych</code></a> package. For convenience,
+the following pre-processing has been applied:</p><ul>
 <li><p>The data were filtered to only include employees from Lebanon and Taiwan.</p></li>
-<li><p>The answers, originally on a 1-7 Likert-type scale, were centered and
+<li><p>The answers, originally on a 7-point Likert scale, were centered and
 scaled.</p></li>
 <li><p>The items were renamed as described above.</p></li>
 </ul>
@@ -221,11 +218,11 @@ scaled.</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Elena Geminiani, Giampiero Marra.</p>
+  <p><p>Developed by Elena Geminiani, Giampiero Marra, Irini Moustaki.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -233,6 +230,8 @@ scaled.</p></li>
 
   
 
+
+  
 
   </body>
 </html>

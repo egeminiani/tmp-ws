@@ -166,12 +166,11 @@ returned by <code>type="full"</code> is the sum of all the <code>shrink</code> a
     <tr>
       <th>which</th>
       <td><p>Character prompting the extraction of the penalty matrix
-component corresponding to the specified model matrix. Possible values are
+component corresponding to the specified model matrix. It is only valid
+when <code>type="shrink"</code> or <code>type="diff"</code>. Possible values are
 <code>"lambda"</code>, <code>"psi"</code>, <code>"phi"</code>, <code>"tau"</code>, <code>"kappa"</code>
-and <code>"none"</code>. It is only valid when <code>type="shrink"</code> or
-<code>type="diff"</code>. Only the model matrices penalized during model fitting
-(i.e., in the <code>penfa</code> call) can appear in the <code>which</code>
-argument.</p></td>
+and <code>"none"</code>.  Only the model matrices penalized during model fitting
+(i.e., in the <code>penfa</code> call) can appear in the <code>which</code> argument.</p></td>
     </tr>
     <tr>
       <th>object</th>

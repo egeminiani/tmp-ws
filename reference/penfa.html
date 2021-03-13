@@ -186,7 +186,8 @@ specify a model syntax.</p></td>
     <tr>
       <th>data</th>
       <td><p>A data frame containing the (continuous) observed variables used
-in the model. All variables are treated as numeric.</p></td>
+in the model. Except for the <code>group</code> variable, all variables are
+treated as numeric.</p></td>
     </tr>
     <tr>
       <th>group</th>
@@ -224,15 +225,15 @@ parameter(s) if the automatic procedure is requested (<code>strategy =
 optimization if <code>strategy = "fixed"</code>. The list has two components with
 names "shrink" and "diff", which refer to the tuning parameters to be used
 for shrinkage and group equivalence, respectively. The components of the
-list are, in turn, named vectors specifying the type of parameter
-matrices or vectors to be penalized. Common choices are "lambda" for the
-loading matrix and "tau" for the intercept vector of the observed
-variables. Other possible values are "phi" for the factor covariance
-matrix, "psi" for the covariance matrix of the unique factors, and "kappa"
-for the factor means. By default, all non-fixed elements of the specified
-matrix/vector are penalized. When <code>strategy = "fixed"</code> and the tuning
-values in <code>eta</code> are equal to zero, specifying both list names as "none"
-results in ordinary maximum likelihood estimation (no penalization).</p></td>
+list are, in turn, named vectors specifying the type of parameter matrices
+or vectors to be penalized. Common choices are "lambda" for the loading
+matrix and "tau" for the intercept vector of the observed variables. Other
+possible values are "phi" for the factor covariance matrix, "psi" for the
+covariance matrix of the unique factors, and "kappa" for the factor means.
+All non-fixed elements of the specified matrix/vector are penalized. When
+<code>strategy = "fixed"</code> and the tuning values in <code>eta</code> are equal to
+zero, specifying both list names as "none" results in ordinary maximum
+likelihood estimation (no penalization).</p></td>
     </tr>
     <tr>
       <th>strategy</th>
@@ -244,8 +245,8 @@ tuning parameters stored in the option <code>eta</code> is estimated.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional options that can be defined using "name = value". For a
-complete list, please refer to <code><a href='penfaOptions.html'>penfaOptions</a></code>.</p></td>
+      <td><p>Additional options that can be defined using <code>name =
+"value"</code>. For a complete list, please refer to <code><a href='penfaOptions.html'>penfaOptions</a></code>.</p></td>
     </tr>
     </table>
 
@@ -264,7 +265,7 @@ covariance matrices and sample means. For now, if only sample moments are
 available, users can generate multivariate data from those sample moments,
 and apply the <code>penfa</code> function on the generated data.  <br /> All variables
 (except for the <code>group</code> variable in multiple-group analyses) are treated
-as continuous. Categorical items are not currently supported. <br /></p>
+as continuous. <br /> Categorical items are not currently supported. <br /></p>
     <h2 class="hasAnchor" id="model-syntax"><a class="anchor" href="#model-syntax"></a>Model syntax</h2>
 
     <p>The model syntax in the <code>model</code> argument describes the factor analysis
@@ -328,7 +329,7 @@ instance, the formula</p>
 <p>specifies an intercept for variables <code>x1, x2, x3</code> and <code>x4</code>.</p>
 <p>On the right-hand side of these formula-like expressions, each element can be
 modified (using the <code>"*"</code> operator) by a numeric constant or the special
-function <code><a href='https://rdrr.io/r/stats/start.html'>start()</a></code>. This provides the user with a mechanism to fix
+function start(). This provides the user with a mechanism to fix
 parameters and provide alternative starting values, respectively. All
 <code>"*"</code> expressions are referred to as modifiers, and are explained in
 detail in the sections below.</p>
@@ -376,11 +377,11 @@ provides a starting value equal to 0.8 to the loading of <code>x2</code> on
 
 
 <p>In a multiple group factor analysis, the modifiers containing a single element
-should be replaced by a vector with the same length as the number of groups.
+should be replaced by a vector of the same length as the number of groups.
 If a single element is provided, it is recycled for all groups. In the
 example below with two groups, the factor loadings of <code>x1</code> on
 <code>factor1</code> are fixed to 0.8 in both groups, whereas the factor loadings
-of <code>x4</code> are fixed to 0.75 and 0.85 for the first and second group,
+of <code>x4</code> are fixed to 0.75 and 0.85 in the first and second group,
 respectively.</p>
 <pre>
 <span class='va'>multigroup_syntax</span> <span class='op'>&lt;-</span> <span class='st'>'
@@ -411,7 +412,7 @@ to that of the actual objective function. The algorithm exploits second-order
 analytical derivative information. This can come in the form of the penalized
 Hessian matrix (if <code>information = "hessian"</code>) or the penalized Fisher
 information matrix (if <code>information = "fisher"</code>). Models with a
-meanstructure can be only estimated with the penalized Fisher information
+mean structure can be only estimated with the penalized Fisher information
 matrix, which exhibits similar performances to the penalized Hessian at a
 reduced computational cost. <br /></p>
     <h2 class="hasAnchor" id="tuning-parameter-selection"><a class="anchor" href="#tuning-parameter-selection"></a>Tuning parameter selection</h2>
@@ -454,15 +455,16 @@ its recurrent use in sparse settings.</p>
 degrees of freedom (<em>edf</em>) as their bias terms. This is because the use
 of differentiable penalty approximations make the objective function
 twice-continuously differentiable. The total <code>edf</code> are as the sum of the
-effective degree of freedom for each model parameter, which ranges from 0 to
-1 and quantifies the extend to which each parameter has been penalized. <br /></p>
+effective degree of freedom for each model parameter, which in turn ranges
+from 0 to 1 and quantifies the extend to which each parameter has been
+penalized. <br /></p>
 
     <h2 class="hasAnchor" id="penalization"><a class="anchor" href="#penalization"></a>Penalization</h2>
 
     <p>The <code>penfa</code> function penalizes every element in the parameter
 matrix/vector specified in the <code>eta</code> argument. For instance, if
 <code>eta = list("shrink" = c("lambda" = 0.01), "diff" = c("none" = 0))</code> all
-factor loadings are penalized.</p><h3 class='hasAnchor' id='choosing-the-penalty-function'><a class='anchor' href='#choosing-the-penalty-function'></a>Choosing the penalty function</h3>
+factor loadings are penalized through a shrinkage penalty.</p><h3 class='hasAnchor' id='choosing-the-penalty-function'><a class='anchor' href='#choosing-the-penalty-function'></a>Choosing the penalty function</h3>
 
 
 <p>It may be beneficial to try out different penalties, and see which one works
@@ -584,7 +586,7 @@ a larger number of parameters than confirmatory factor analytic applications.
 This complexity should be accompanied by a reasonable sample size. If the
 sample size is too small for the complexity of the model, convergence issues
 will arise. In case of small sample sizes, it might in principle be more
-reliable to select the tuning parameter through a grid-search with the BIC
+reliable to select the tuning parameter through a grid-search with the GBIC
 instead of using the the automatic procedure.</p></li>
 <li><p>Automatic procedure: if the starting values of the tuning parameters
 prevent the automatic procedure from finding the optimal estimates of the

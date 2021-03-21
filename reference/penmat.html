@@ -110,13 +110,13 @@ fitted object of class penfa." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01_penalized-factor-analysis.html">Penalized Factor Analysis</a>
+      <a href="../articles/automatic-tuning-selection.html">Penalized Factor Analysis</a>
     </li>
     <li>
-      <a href="../articles/02_penalized-factor-analysis-grid.html">Penalized Factor Analysis: grid search</a>
+      <a href="../articles/grid-search-tuning-selection.html">Penalized Factor Analysis: grid search</a>
     </li>
     <li>
-      <a href="../articles/03_penalized-multigroup-factor-analysis.html">Penalized Multiple-Group Factor Analysis</a>
+      <a href="../articles/multiple-group-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
   </ul>
 </li>
@@ -155,6 +155,11 @@ fitted object of class <code>penfa</code>.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>x</th>
+      <td><p>An object of class <code><a href='penfa-class.html'>penfa</a></code>, that is, a
+fitted penalized factor model.</p></td>
+    </tr>
+    <tr>
       <th>type</th>
       <td><p>Character denoting the type of penalization. Type equal to
 <code>"full"</code> returns the complete penalty matrix; <code>type="shrink"</code>
@@ -171,11 +176,6 @@ when <code>type="shrink"</code> or <code>type="diff"</code>. Possible values are
 <code>"lambda"</code>, <code>"psi"</code>, <code>"phi"</code>, <code>"tau"</code>, <code>"kappa"</code>
 and <code>"none"</code>.  Only the model matrices penalized during model fitting
 (i.e., in the <code>penfa</code> call) can appear in the <code>which</code> argument.</p></td>
-    </tr>
-    <tr>
-      <th>object</th>
-      <td><p>An object of class <code><a href='penfa-class.html'>penfa</a></code>, that is, a
-fitted penalized factor model.</p></td>
     </tr>
     </table>
 

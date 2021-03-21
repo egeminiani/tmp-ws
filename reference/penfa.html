@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Single and multiple-group penalized factor analysis — penfa • penfa</title>
+<title>Single- and multiple-group penalized factor analysis — penfa • penfa</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Single and multiple-group penalized factor analysis — penfa" />
-<meta property="og:description" content="The function penfa fits single and multiple-group
+<meta property="og:title" content="Single- and multiple-group penalized factor analysis — penfa" />
+<meta property="og:description" content="The function penfa fits single- and multiple-group
 PENalized Factor Analysis models via a trust-region algorithm with
 integrated automatic multiple tuning parameter selection.
 In a single-group analysis, penfa can automatically shrink a subset
@@ -146,13 +146,13 @@ achieve sparsity." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Single and multiple-group penalized factor analysis</h1>
+    <h1>Single- and multiple-group penalized factor analysis</h1>
     
     <div class="hidden name"><code>penfa.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The function <code>penfa</code> fits single and multiple-group
+    <p>The function <code>penfa</code> fits single- and multiple-group
 <em>PENalized Factor Analysis</em> models via a trust-region algorithm with
 integrated automatic multiple tuning parameter selection.</p>
 <p>In a single-group analysis, <code>penfa</code> can automatically shrink a subset
@@ -483,7 +483,7 @@ to otherwise computationally intensive multi-dimensional grid-searches.</p></li>
 </ul>
 
 <p>Geminiani, Marra, and Moustaki (in press) performed numerical and
-empirical examples to evaluate and compare the performance of single and
+empirical examples to evaluate and compare the performance of single- and
 multiple-group penalized factor models under different penalty functions. The
 alasso penalty generally produced the best trade-off between sparsity and
 goodness of fit. However, unlike other penalties, the alasso requires a set
@@ -535,7 +535,7 @@ definite. In case of convergence issues, <code>penfa</code> warns the users with
 explanatory messages. <br /> <strong>Note:</strong> Due to the presence of possibly
 multiple penalty terms, our experiments highlighted that the penalized
 gradient need not be strictly close to zero to obtain meaningful results. It
-is enough that its element do not exceed a pre-specified threshold, whose
+is enough that its elements do not exceed a pre-specified threshold, whose
 value can be changed through the <code>optim.dx.tol</code> option.</p>
 
 <h3 class='hasAnchor' id='admissibility'><a class='anchor' href='#admissibility'></a>Admissibility</h3>
@@ -563,7 +563,7 @@ messages on the reasons why. <br /></p>
 errors. If the errors concern convergence issues, it may be helpful to go
 through the following steps:</p>
 <ol>
-<li><p>Identification: please make sure that the at least the
+<li><p>Identification: please make sure that at least the
 minimum identification restrictions are satisfied. This implies fixing the
 scale and the origin of every factor in each group. In addition, other
 constraints - which usually come in the form of zero-restricted loadings -
@@ -628,7 +628,7 @@ should take extra caution when using the standard errors associated with the
 penalized parameters that were shrunken to zero. <br /></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Geminiani E., Marra G., Moustaki I. (in press), "Single and
+    <p>Geminiani E., Marra G., Moustaki I. (in press), "Single- and
 multiple-group penalized factor analysis: a trust-region algorithm approach
 with integrated automatic multiple tuning parameter selection". Psychometrika</p>
 <p>Geminiani E. (2020), "A penalized likelihood-based framework for single and
@@ -723,7 +723,7 @@ h1 + v1 ~ 0*1 '</span>
                       pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
                       pen.diff <span class='op'>=</span> <span class='st'>"alasso"</span>,
                       eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>,
-                      diff   <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span>, <span class='st'>"tau"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span><span class='op'>)</span>,
+                      diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span>, <span class='st'>"tau"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span><span class='op'>)</span>,
                       <span class='co'>## automatic procedure</span>
                       strategy <span class='op'>=</span> <span class='st'>"auto"</span>,
                       gamma <span class='op'>=</span> <span class='fl'>4</span>,

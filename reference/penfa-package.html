@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set for cross-cultural analysis — ccdata • penfa</title>
+<title>penfa: Single- and Multiple-Group Penalized Factor Analysis — penfa-package • penfa</title>
 
 
 <!-- jquery -->
@@ -41,14 +41,15 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Data set for cross-cultural analysis — ccdata" />
-<meta property="og:description" content="A data set for cross-cultural analysis containing the
-standardized ratings to 12 items concerning organizational citizenship
-behavior. Employees from different countries were asked to rate their
-attitudes towards helping other employees and giving suggestions for
-improved work conditions. The items are thought to underlie two latent
-factors: helping behavior (first seven items) and voice behavior
-(last five items). See below for details." />
+<meta property="og:title" content="penfa: Single- and Multiple-Group Penalized Factor Analysis — penfa-package" />
+<meta property="og:description" content="The penfa package (a short form for PENalized Factor Analysis) provides
+several routines for single- and multiple-group penalized factor analysis.
+The models are estimated via a trust-region algorithm with integrated
+automatic multiple tuning parameter selection. The available penalties include
+lasso, adaptive lasso, scad, mcp, and ridge. 
+The main function of the package is penfa. To learn more about
+it, start with the package vignettes at
+egeminiani.github.io/penfa/articles/" />
 
 
 
@@ -144,78 +145,70 @@ factors: helping behavior (first seven items) and voice behavior
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set for cross-cultural analysis</h1>
+    <h1>penfa: Single- and Multiple-Group Penalized Factor Analysis</h1>
     
-    <div class="hidden name"><code>ccdata.Rd</code></div>
+    <div class="hidden name"><code>penfa-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A data set for cross-cultural analysis containing the
-standardized ratings to 12 items concerning organizational citizenship
-behavior. Employees from different countries were asked to rate their
-attitudes towards helping other employees and giving suggestions for
-improved work conditions. The items are thought to underlie two latent
-factors: <strong>helping</strong> behavior (first seven items) and <strong>voice</strong> behavior
-(last five items). See below for details.</p>
+    <p>The <code>penfa</code> package (a short form for <em>PENalized Factor Analysis</em>) provides
+several routines for single- and multiple-group penalized factor analysis.
+The models are estimated via a trust-region algorithm with integrated
+automatic multiple tuning parameter selection. The available penalties include
+lasso, adaptive lasso, scad, mcp, and ridge. <br /><br />
+The main function of the package is <code><a href='penfa.html'>penfa</a></code>. To learn more about
+it, start with the package vignettes at
+<a href='https://egeminiani.github.io/penfa/articles/'>egeminiani.github.io/penfa/articles/</a></p>
     </div>
 
-    <pre class="usage"><span class='va'>ccdata</span></pre>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 767 rows and 13 variables:</p>
-<dl>
-<dt>country</dt><dd><p>Character. Country of origin of the employee: Lebanon
-("LEB") or Taiwan ("TAIW").</p></dd>
-<dt>h1</dt><dd><p>Numeric. Standardized ratings to the item "<em>I volunteer to do
-things for this organization</em>".</p></dd>
-<dt>h2</dt><dd><p>Numeric.  Standardized ratings to the item "<em>I help orient new
-employees in this organization</em>".</p></dd>
-<dt>h3</dt><dd><p>Numeric. Standardized ratings to the item "<em>I attend functions
-that help this organization</em>".</p></dd>
-<dt>h4</dt><dd><p>Numeric. Standardized ratings to the item "<em>I help others in
-this work group with their work for the benefit of the group</em>".</p></dd>
-<dt>h5</dt><dd><p>Numeric. Standardized ratings to the item "<em>I get involved to
-benefit this organization</em>".</p></dd>
-<dt>h6</dt><dd><p>Numeric. Standardized ratings to the item "<em>I help others in this
-organization learn about the work</em>".</p></dd>
-<dt>h7</dt><dd><p>Numeric. Standardized ratings to the item "<em>I help others in this
-organization with their work responsibilities</em>".</p></dd>
-<dt>v1</dt><dd><p>Numeric. Standardized ratings to the item "<em>I develop and make
-recommendations concerning issues that affect this organization</em>".</p></dd>
-<dt>v2</dt><dd><p>Numeric. Standardized ratings to the item "<em>I speak up
-and encourage other in this organization to get involved in issues that
-affect the group</em>".</p></dd>
-<dt>v3</dt><dd><p>Numeric. Standardized ratings to the item "<em>I
-communicate my opinions about work issues to others in this organization
-even if my opinion is different and others in the organization disagree
-with me</em>".</p></dd>
-<dt>v4</dt><dd><p>Numeric. Standardized ratings to the item "<em>I keep well informed
-about issues where my opinion might be useful to this organization</em>".</p></dd>
-<dt>v5</dt><dd><p>Numeric. Standardized ratings to the item "<em>I speak up in
-this organization with ideas for new projects or changes in procedures</em>".</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>The original data set is available from the
-<a href='https://github.com/Jo-Karl/ccpsyc/tree/master/data/'><code>ccpsyc</code></a> package.
-Please refer to <a href='https://www.frontiersin.org/articles/10.3389/fpsyg.2019.01507/full'>Fischer and Karl (2019)</a>
-and <a href='https://link.springer.com/article/10.1057/s41267-017-0132-6'>Fischer et al. (2019)</a> for a
-thorough description and analysis of these data.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The original data come from the
-<a href='https://github.com/Jo-Karl/ccpsyc/'><code>ccpsyc</code></a> package. For convenience,
-the following pre-processing has been applied:</p><ul>
-<li><p>The data were filtered to only include employees from Lebanon and Taiwan.</p></li>
-<li><p>The answers, originally on a 7-point Likert scale, were centered and
-scaled.</p></li>
-<li><p>The items were renamed as described above.</p></li>
-</ul>
+    <p>Penalized factor analysis allows to produce parsimonious models using largely
+an automated procedure. The use of sparsity-inducing penalty functions leads
+to optimally sparse factor structures supported by the data. The resulting
+models are less prone to instability in the estimation process and are easier
+to interpret and generalize than their unpenalized counterparts. In the
+single-group case, a typical penalty function will automatically shrink a
+subset of the factor loadings to zero.</p>
+<p>In a multiple-group scenario, penalized factor analysis can be used to
+automatically ascertain the differences and similarities of the parameter
+estimates across groups. Typical penalties will automatically encourage
+sparse loading matrices and invariant factor loadings and intercepts.</p>
+<p>In <code>penfa</code>, estimation is achieved via a penalized likelihood-based
+framework that builds upon differentiable approximations of
+non-differentiable penalties, a theoretically founded definition of degrees
+of freedom, and an algorithm with integrated automatic multiple tuning
+parameter selection. The estimation is based on a trust-region algorithm
+approach exploiting second-order analytical derivative information. The
+standard errors for the model parameters are derived using a Bayesian
+approach.</p>
+<p>The selection of the tuning parameters is a crucial issue in penalized
+estimation strategies, as the tuning parameters are responsible for the
+optimal balance between goodness of fit and sparsity. In <code>penfa</code>, the
+optimal values of the tuning parameters can be determined through the
+automatic procedure or grid-searches.</p>
+<p>In addition to the fitting function <code><a href='penfa.html'>penfa</a></code>, the package provides
+several methods for examining the resulting parameter estimates, monitoring
+the optimization process, and inspecting the structures of the penalty
+matrices through interactive visualizations.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <p>Geminiani, E., Marra, G., &amp; Moustaki, I. (2021). "Single- and Multiple-Group
+Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
+Automatic Multiple Tuning Parameter Selection." Psychometrika, 1-31.</p>
+<p>Geminiani E. (2020), "A penalized likelihood-based framework for single and
+multiple-group factor analysis models" (Doctoral dissertation, University of
+Bologna). Available at <a href='http://amsdottorato.unibo.it/9355/'>http://amsdottorato.unibo.it/9355/</a>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='penfa.html'>penfa</a></code>, <code><a href='penfa-class.html'>penfa-class</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Authors: Elena Geminiani, Giampiero Marra, Irini Moustaki</p>
+<p>Maintainer: Elena Geminiani. Please address any query or comment to
+<a href='mailto:geminianielena@gmail.com'>geminianielena@gmail.com</a>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

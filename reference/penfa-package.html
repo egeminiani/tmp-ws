@@ -43,13 +43,12 @@
 
 <meta property="og:title" content="penfa: Single- and Multiple-Group Penalized Factor Analysis — penfa-package" />
 <meta property="og:description" content="The penfa package (a short form for PENalized Factor Analysis) provides
-several routines for single- and multiple-group penalized factor analysis.
-The models are estimated via a trust-region algorithm with integrated
-automatic multiple tuning parameter selection. The available penalties include
-lasso, adaptive lasso, scad, mcp, and ridge. 
+several routines for single- and multiple-group penalized factor analysis for
+continuous data. The models are estimated via a trust-region algorithm with
+integrated automatic multiple tuning parameter selection. The available
+penalties include lasso, adaptive lasso, scad, mcp, and ridge. 
 The main function of the package is penfa. To learn more about
-it, start with the package vignettes at
-egeminiani.github.io/penfa/articles/" />
+it, start with the package vignettes: browseVignettes(package = &quot;penfa&quot;)" />
 
 
 
@@ -126,9 +125,6 @@ egeminiani.github.io/penfa/articles/" />
     </li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -152,13 +148,12 @@ egeminiani.github.io/penfa/articles/" />
 
     <div class="ref-description">
     <p>The <code>penfa</code> package (a short form for <em>PENalized Factor Analysis</em>) provides
-several routines for single- and multiple-group penalized factor analysis.
-The models are estimated via a trust-region algorithm with integrated
-automatic multiple tuning parameter selection. The available penalties include
-lasso, adaptive lasso, scad, mcp, and ridge. <br /><br />
+several routines for single- and multiple-group penalized factor analysis for
+continuous data. The models are estimated via a trust-region algorithm with
+integrated automatic multiple tuning parameter selection. The available
+penalties include lasso, adaptive lasso, scad, mcp, and ridge. <br /><br />
 The main function of the package is <code><a href='penfa.html'>penfa</a></code>. To learn more about
-it, start with the package vignettes at
-<a href='https://egeminiani.github.io/penfa/articles/'>egeminiani.github.io/penfa/articles/</a></p>
+it, start with the package vignettes: browseVignettes(package = "penfa")</p>
     </div>
 
 
@@ -166,14 +161,14 @@ it, start with the package vignettes at
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Penalized factor analysis allows to produce parsimonious models using largely
-an automated procedure. The use of sparsity-inducing penalty functions leads
-to optimally sparse factor structures supported by the data. The resulting
-models are less prone to instability in the estimation process and are easier
-to interpret and generalize than their unpenalized counterparts. In the
-single-group case, a typical penalty function will automatically shrink a
-subset of the factor loadings to zero.</p>
-<p>In a multiple-group scenario, penalized factor analysis can be used to
-automatically ascertain the differences and similarities of the parameter
+an automated procedure. In the single-group case, a typical penalty function
+will automatically shrink a subset of the factor loadings to zero. The use of
+sparsity-inducing penalty functions leads to optimally sparse factor
+structures supported by the data. The resulting models are less prone to
+instability in the estimation process and are easier to interpret and
+generalize than their unpenalized counterparts.</p>
+<p>In the multiple-group scenario, penalized factor analysis can be used to
+automatically ascertain differences and similarities of parameter
 estimates across groups. Typical penalties will automatically encourage
 sparse loading matrices and invariant factor loadings and intercepts.</p>
 <p>In <code>penfa</code>, estimation is achieved via a penalized likelihood-based
@@ -190,7 +185,7 @@ optimal balance between goodness of fit and sparsity. In <code>penfa</code>, the
 optimal values of the tuning parameters can be determined through the
 automatic procedure or grid-searches.</p>
 <p>In addition to the fitting function <code><a href='penfa.html'>penfa</a></code>, the package provides
-several methods for examining the resulting parameter estimates, monitoring
+several methods for examining the parameter estimates, monitoring
 the optimization process, and inspecting the structures of the penalty
 matrices through interactive visualizations.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

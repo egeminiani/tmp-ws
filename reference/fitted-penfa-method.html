@@ -179,9 +179,96 @@ according to the item names used in the model syntax.</p></td>
 <span class='co'>## --- Continuing the Examples from penfa man page:</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>utils</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='st'>"penfa"</span>, echo <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: no help found for ‘penfa’</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'fitted': oggetto "alasso_fit" non trovato</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fitMG</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'fitted': oggetto "alasso_fitMG" non trovato</span></div><div class='input'>
+</div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
+#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00298271 
+#&gt; Iteration  2 : 0.00452604 
+#&gt; 
+#&gt; Largest absolute gradient value: 12.76355181
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [180.2917, 9189645]
+#&gt; Trust region iterations: 15 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 27.12936  
+#&gt; 
+#&gt; Largest absolute gradient value: 0.00108292
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [2.904073, 76169.99]
+#&gt; Trust region iterations: 22 
+#&gt; Factor solution: admissible 
+#&gt; Computing VCOV ... done.
+#&gt; Effective degrees of freedom: 94  
+#&gt; 
+#&gt; Automatic procedure: 
+#&gt; Iteration  1 : 0.00215339 3061215.60016969 0.00275238 
+#&gt; Iteration  2 : 0.00196556 31104.27952631 0.00807834 
+#&gt; 
+#&gt; Largest absolute gradient value: 68.08486896
+#&gt; Fisher information matrix is positive definite
+#&gt; Eigenvalue range: [53.35061, 9.10331e+12]
+#&gt; Trust region iterations: 23 
+#&gt; Factor solution: admissible 
+#&gt; Effective degrees of freedom: 56.76456  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $cov
+#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
+#&gt; h1 0.974                                                                  
+#&gt; h2 0.657 0.969                                                            
+#&gt; h3 0.594 0.665 0.973                                                      
+#&gt; h4 0.678 0.759 0.686 0.968                                                
+#&gt; h5 0.655 0.734 0.664 0.757 0.968                                          
+#&gt; h6 0.669 0.749 0.677 0.772 0.749 0.966                                    
+#&gt; h7 0.630 0.706 0.638 0.724 0.708 0.727 0.967                              
+#&gt; v1 0.571 0.640 0.579 0.652 0.649 0.672 0.681 0.969                        
+#&gt; v2 0.585 0.656 0.593 0.668 0.665 0.689 0.697 0.741 0.968                  
+#&gt; v3 0.566 0.634 0.573 0.645 0.642 0.665 0.674 0.716 0.734 0.970            
+#&gt; v4 0.566 0.634 0.573 0.646 0.643 0.666 0.674 0.717 0.735 0.710 0.970      
+#&gt; v5 0.541 0.606 0.547 0.617 0.614 0.636 0.644 0.685 0.701 0.678 0.678 0.972
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fitMG</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $LEB
+#&gt; $LEB$cov
+#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
+#&gt; h1 1.135                                                                  
+#&gt; h2 0.831 1.131                                                            
+#&gt; h3 0.750 0.828 1.091                                                      
+#&gt; h4 0.872 0.963 0.869 1.137                                                
+#&gt; h5 0.833 0.919 0.829 0.964 1.083                                          
+#&gt; h6 0.850 0.938 0.847 0.984 0.940 1.123                                    
+#&gt; h7 0.813 0.898 0.810 0.940 0.899 0.920 1.105                              
+#&gt; v1 0.759 0.838 0.756 0.874 0.839 0.863 0.869 1.088                        
+#&gt; v2 0.771 0.850 0.768 0.888 0.852 0.877 0.882 0.925 1.146                  
+#&gt; v3 0.742 0.819 0.739 0.855 0.820 0.844 0.849 0.890 0.904 1.120            
+#&gt; v4 0.741 0.818 0.739 0.854 0.820 0.843 0.849 0.890 0.904 0.870 1.128      
+#&gt; v5 0.707 0.781 0.705 0.815 0.782 0.805 0.810 0.849 0.862 0.830 0.830 1.081
+#&gt; 
+#&gt; $LEB$mean
+#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5 
+#&gt; 0.092 0.088 0.091 0.047 0.127 0.110 0.114 0.148 0.127 0.144 0.144 0.143 
+#&gt; 
+#&gt; 
+#&gt; $TAIW
+#&gt; $TAIW$cov
+#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
+#&gt; h1 0.868                                                                  
+#&gt; h2 0.509 0.828                                                            
+#&gt; h3 0.460 0.507 0.869                                                      
+#&gt; h4 0.535 0.591 0.533 0.862                                                
+#&gt; h5 0.510 0.563 0.508 0.592 0.867                                          
+#&gt; h6 0.519 0.573 0.517 0.602 0.574 0.821                                    
+#&gt; h7 0.486 0.536 0.484 0.562 0.537 0.549 0.851                              
+#&gt; v1 0.428 0.472 0.426 0.491 0.473 0.489 0.508 0.886                        
+#&gt; v2 0.434 0.479 0.433 0.499 0.480 0.497 0.516 0.577 0.794                  
+#&gt; v3 0.418 0.461 0.416 0.480 0.462 0.478 0.497 0.555 0.564 0.815            
+#&gt; v4 0.418 0.461 0.416 0.480 0.462 0.478 0.497 0.555 0.564 0.542 0.803      
+#&gt; v5 0.399 0.440 0.397 0.458 0.441 0.456 0.474 0.530 0.538 0.517 0.517 0.854
+#&gt; 
+#&gt; $TAIW$mean
+#&gt;     h1     h2     h3     h4     h5     h6     h7     v1     v2     v3     v4 
+#&gt; -0.101 -0.102 -0.102 -0.057 -0.127 -0.115 -0.134 -0.162 -0.140 -0.159 -0.159 
+#&gt;     v5 
+#&gt; -0.150 
+#&gt; 
+#&gt; </div><div class='input'>
 
 </div></pre>
   </div>

@@ -250,14 +250,14 @@ tuning parameters stored in the option <code>eta</code> is estimated.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code><a href='penfa-class.html'>penfa</a></code>, for which several
-methods are available. See the corresponding man page of
+methods are available. See the corresponding manual page of
 <code>summary,penfa-method</code>, <code>show,penfa-method</code>,
 <code>coef,penfa-method</code>, and <code>fitted,penfa-method</code> for details.</p>
     <h2 class="hasAnchor" id="data-set-vs-sample-moments"><a class="anchor" href="#data-set-vs-sample-moments"></a>Data set vs Sample Moments</h2>
 
-    <p>The <code>penfa</code> function currently takes in input a data set, as opposed to
+    <p>The <code>penfa</code> function currently takes as input a data set, as opposed to
 the sample moments (i.e., covariance matrices and mean vectors). Future
-implementations will allow <code>penfa</code> to additionally take in input sample
+implementations will allow <code>penfa</code> to additionally take as input sample
 covariance matrices and sample means. For now, if only sample moments are
 available, users can generate multivariate data from those sample moments,
 and apply the <code>penfa</code> function on the generated data.  <br /> All variables
@@ -333,12 +333,12 @@ detail in the sections below.</p>
 <p>Each parameter in a model is automatically given a name consisting of three
 parts, that are coerced to a single character vector. The first part is the
 name of the variable on the left-hand side of the formula where the parameter
-is implied. The middle part is based on the special 'operator' used in the
+is implied. The middle part is based on the special "operator" used in the
 formula (e.g., <code>"=~"</code>, <code>"~"</code> or <code>"~~"</code>). The third part is the
 name of the variable on the right-hand side of the formula where the
 parameter is implied, or "1" if it is an intercept. The three parts are
 pasted together in a single string. For example, the name of the factor
-loading of <code>x2</code> on <code>factor1</code> is is the string <code>"factor1~x2"</code>.
+loading of <code>x2</code> on <code>factor1</code> is the string <code>"factor1~x2"</code>.
 The name of the parameter corresponding to the factor covariance between
 <code>factor1</code> and <code>factor2</code> is the string <code>"factor1~~factor2"</code>.</p><h3 class='hasAnchor' id='fixing-parameters'><a class='anchor' href='#fixing-parameters'></a>Fixing parameters</h3>
 
@@ -375,7 +375,7 @@ provides a starting value equal to 0.8 to the loading of <code>x2</code> on
 
 <p>In a multiple group factor analysis, the modifiers containing a single element
 should be replaced by a vector of the same length as the number of groups.
-If a single element is provided, it is recycled for all groups. In the
+If a single element is provided, it is used for all groups. In the
 example below with two groups, the factor loadings of <code>x1</code> on
 <code>factor1</code> are fixed to 0.8 in both groups, whereas the factor loadings
 of <code>x4</code> are fixed to 0.75 and 0.85 in the first and second group,
@@ -479,7 +479,7 @@ analyses), for which the automatic procedure is the only feasible alternative
 to otherwise computationally intensive multi-dimensional grid-searches.</p></li>
 </ul>
 
-<p>Geminiani, Marra, and Moustaki (in press) performed numerical and
+<p>Geminiani, Marra, and Moustaki (2021) performed numerical and
 empirical examples to evaluate and compare the performance of single- and
 multiple-group penalized factor models under different penalty functions. The
 alasso penalty generally produced the best trade-off between sparsity and
@@ -551,7 +551,7 @@ sequentially checks whether:</p><ol>
 
 <p>In case of multiple-group analyses, the function checks the admissibility of
 the parameter matrices of each group. If any of the above conditions are not
-satisfied, the <code>penfa</code> function warns the users with explanatory
+satisfied, the <code>penfa</code> function warns the user with explanatory
 messages on the reasons why. <br /></p>
 
     <h2 class="hasAnchor" id="warnings-amp-errors"><a class="anchor" href="#warnings-amp-errors"></a>Warnings &amp; Errors</h2>
@@ -584,11 +584,11 @@ This complexity should be accompanied by a reasonable sample size. If the
 sample size is too small for the complexity of the model, convergence issues
 will arise. In case of small sample sizes, it might in principle be more
 reliable to select the tuning parameter through a grid-search with the GBIC
-instead of using the the automatic procedure.</p></li>
+instead of using the automatic procedure.</p></li>
 <li><p>Automatic procedure: if the starting values of the tuning parameters
 prevent the automatic procedure from finding the optimal estimates of the
 tuning parameters, the procedure is repeated with different starting values.
-If even this estimation fails, an error is printed out.</p></li>
+If this fails, an error is printed out.</p></li>
 <li><p>Adaptive weights: when using the alasso penalty, it is suggested to
 manually provide a vector of adaptive weights, especially for complex models.
 The adaptive weights often come in the form of (unpenalized) maximum
